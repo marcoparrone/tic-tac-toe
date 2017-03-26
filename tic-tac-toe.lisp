@@ -10,7 +10,8 @@
 ;; Maintainer: Marco Parrone <marco.parrone@gmail.com>
 ;; Description: A tic tac toe game.
 ;; Language: Common Lisp
-;; Compatibility: Steel Bank Common Lisp 1.3.11.
+;; Compatibility: Steel Bank Common Lisp 1.3.11
+;; Dependencies: QuickLisp + Hunchentoot
 ;; Location: https://github.com/marcoparrone/tic-tac-toe
 
 ;; Permission is hereby granted, free of charge, to any person
@@ -42,6 +43,9 @@
 ;; It's still a Work is in progress, the game is not really playable yet.
 
 ;;; Code:
+
+;; Load the Hunchentoot web server by using Quicklisp
+(ql:quickload :hunchentoot)
 
 (defvar *debug-mode* 'nil)
 
@@ -415,5 +419,101 @@ a string."
   (loop while (not *quit*) do
        (mp-eval-user-input (mp-prompt-user)))
   (set '*quit* 'nil))
+
+;; The Hunchentoot document root for tic-tac-toe - where you can find
+;; tic-tac-toe.html and tic-tac-toe.svg
+;;
+(defvar *tic-tac-toe-document-root*
+  (concatenate 'string (sb-posix:getcwd) "/www/"))
+
+(defun tic-tac-toe-web-init ()
+  "Start an Hunchentoot instance to serve tic-tac-toe over the web."
+  (hunchentoot:start (make-instance
+		      'hunchentoot:easy-acceptor
+		      :document-root *tic-tac-toe-document-root*
+		      :address "127.0.0.1"
+		      :port 4242)))
+
+(hunchentoot:define-easy-handler (tic-tac-toe-handler :uri "/tic-tac-toe") ()
+  (setf (hunchentoot:content-type*) "text/html")
+  (with-open-file (infile (concatenate 'string
+				       *tic-tac-toe-document-root*
+				       "tic-tac-toe.html"))
+    (let ((fullpage ""))
+      (loop
+	 for inline = (read-line infile nil nil)
+	 while inline
+	 do (setq fullpage (concatenate 'string fullpage inline "
+")))
+      (format nil "~a~%" fullpage))))
+
+(defun print-board-to-xml (board)
+  "Print a board to XML representation - for use by the web GUI."
+  (format nil
+	  "<?xml version=\"1.0\" ?>~%<tic-tac-toe>~{<r>~a</r>~%~}</tic-tac-toe>"
+	  (map 'list #'(lambda (cell)
+			 (cond ((eql cell 'empty) " ")
+			       ((eql cell 'X) "X")
+			       ((eql cell 'O) "O")))
+	       board)))
+
+(hunchentoot:define-easy-handler
+    (tic-tac-toe-on_startup-handler :uri "/on_startup.xml") ()
+  (setf (hunchentoot:content-type*) "text/xml")
+  (print-board-to-xml *board*))
+
+(hunchentoot:define-easy-handler
+    (tic-tac-toe-user_input_0-handler :uri "/user_input_0.xml") ()
+  (setf (hunchentoot:content-type*) "text/xml")
+  (mp-eval-user-input "7")
+  (print-board-to-xml *board*))
+
+(hunchentoot:define-easy-handler
+    (tic-tac-toe-user_input_1-handler :uri "/user_input_1.xml") ()
+  (setf (hunchentoot:content-type*) "text/xml")
+  (mp-eval-user-input "8")
+  (print-board-to-xml *board*))
+
+(hunchentoot:define-easy-handler
+    (tic-tac-toe-user_input_2-handler :uri "/user_input_2.xml") ()
+  (setf (hunchentoot:content-type*) "text/xml")
+  (mp-eval-user-input "9")
+  (print-board-to-xml *board*))
+
+(hunchentoot:define-easy-handler
+    (tic-tac-toe-user_input_3-handler :uri "/user_input_3.xml") ()
+  (setf (hunchentoot:content-type*) "text/xml")
+  (mp-eval-user-input "4")
+  (print-board-to-xml *board*))
+
+(hunchentoot:define-easy-handler
+    (tic-tac-toe-user_input_4-handler :uri "/user_input_4.xml") ()
+  (setf (hunchentoot:content-type*) "text/xml")
+  (mp-eval-user-input "5")
+  (print-board-to-xml *board*))
+
+(hunchentoot:define-easy-handler
+    (tic-tac-toe-user_input_5-handler :uri "/user_input_5.xml") ()
+  (setf (hunchentoot:content-type*) "text/xml")
+  (mp-eval-user-input "6")
+  (print-board-to-xml *board*))
+
+(hunchentoot:define-easy-handler
+    (tic-tac-toe-user_input_6-handler :uri "/user_input_6.xml") ()
+  (setf (hunchentoot:content-type*) "text/xml")
+  (mp-eval-user-input "1")
+  (print-board-to-xml *board*))
+
+(hunchentoot:define-easy-handler
+    (tic-tac-toe-user_input_7-handler :uri "/user_input_7.xml") ()
+  (setf (hunchentoot:content-type*) "text/xml")
+  (mp-eval-user-input "2")
+  (print-board-to-xml *board*))
+
+(hunchentoot:define-easy-handler
+    (tic-tac-toe-user_input_8-handler :uri "/user_input_8.xml") ()
+  (setf (hunchentoot:content-type*) "text/xml")
+  (mp-eval-user-input "3")
+  (print-board-to-xml *board*))
 
 ;;;; tic-tac-toe.lisp ends here.
