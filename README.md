@@ -17,8 +17,8 @@ This is the development environment I'm using:
      * [Quicklisp](http://www.quicklisp.org)
      * [Hunchentoot](http://weitz.de/hunchentoot)
      * [CentOS 7](http://centos.org)
-     * [Emacs](https://www.gnu.org/software/emacs)
-     * [SLIME](https://common-lisp.net/project/slime)
+     * [Emacs](http://www.gnu.org/software/emacs)
+     * [SLIME](http://common-lisp.net/project/slime)
 
 ## To start the command line game
 
