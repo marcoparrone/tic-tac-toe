@@ -2,18 +2,6 @@
 
 ;; Copyright (C)  2000,2002,2017  Marco Parrone
 
-;; Filename: tic-tac-toe.lisp
-;; Version: it's stil super alpha
-;; Updated: 12th of March 2017
-;; Keywords: tic, tac, toe, game
-;; Author: Marco Parrone <marco.parrone@gmail.com>
-;; Maintainer: Marco Parrone <marco.parrone@gmail.com>
-;; Description: A tic tac toe game.
-;; Language: Common Lisp
-;; Compatibility: Steel Bank Common Lisp 1.3.11
-;; Dependencies: QuickLisp + Hunchentoot
-;; Location: https://github.com/marcoparrone/tic-tac-toe
-
 ;; Permission is hereby granted, free of charge, to any person
 ;; obtaining a copy of this software and associated documentation
 ;; files (the "Software"), to deal in the Software without
@@ -33,14 +21,6 @@
 ;; ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 ;; CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
-
-;;; Commentary:
-
-;; A command-line tic-tac-toe implementation in Common Lisp.
-
-;; I am writing this for fun and for learning Common Lisp.
-
-;; It's still a Work is in progress, the game is not really playable yet.
 
 ;;; Code:
 
