@@ -165,7 +165,7 @@ class Board extends React.Component {
                 <rect id="r6" onClick={event => this.main_loop_helper(7)} x="0%"  y="66%" height="33%" width="33%" opacity="0" />
                 <rect id="r7" onClick={event => this.main_loop_helper(8)} x="33%" y="66%" height="33%" width="33%" opacity="0" />
                 <rect id="r8" onClick={event => this.main_loop_helper(9)} x="66%" y="66%" height="33%" width="33%" opacity="0" />
-              </svg>
+              </svg><br/>
               <button onClick={event => this.resetgame()}>Restart game</button>
             </div>
         );
