@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="100%" height="100%" onload="do_onstartup()">
+<script type="text/javascript" xlink:href="tic-tac-toe.js" />
+
+<!-- boards lines -->
+<line x1="33%" y1="0"   x2="33%" y2="99%" stroke-width="1" stroke="black" />
+<line x1="66%" y1="0"   x2="66%" y2="99%" stroke-width="1" stroke="black" />
+<line x1="0"   y1="33%" x2="99%" y2="33%" stroke-width="1" stroke="black" />
+<line x1="0"   y1="66%" x2="99%" y2="66%" stroke-width="1" stroke="black" />
+
+<!-- circles -->
+<circle id="c0" cx="16.5%" cy="16.5%" r="15%" fill="none" stroke="black" stroke-width="3" opacity="0" />
+<circle id="c1" cx="49.5%" cy="16.5%" r="15%" fill="none" stroke="black" stroke-width="3" opacity="0" />
+<circle id="c2" cx="82.5%" cy="16.5%" r="15%" fill="none" stroke="black" stroke-width="3" opacity="0" />
+
+<circle id="c3" cx="16.5%" cy="49.5%" r="15%" fill="none" stroke="black" stroke-width="3" opacity="0" />
+<circle id="c4" cx="49.5%" cy="49.5%" r="15%" fill="none" stroke="black" stroke-width="3" opacity="0" />
+<circle id="c5" cx="82.5%" cy="49.5%" r="15%" fill="none" stroke="black" stroke-width="3" opacity="0" />
+
+<circle id="c6" cx="16.5%" cy="82.5%" r="15%" fill="none" stroke="black" stroke-width="3" opacity="0" />
+<circle id="c7" cx="49.5%" cy="82.5%" r="15%" fill="none" stroke="black" stroke-width="3" opacity="0" />
+<circle id="c8" cx="82.5%" cy="82.5%" r="15%" fill="none" stroke="black" stroke-width="3" opacity="0" />
+
+<!-- Xs FIXME!: transform to percentages -->
+<path id="x0" d="M  15  15 L  85  85 Z M  15  85 L  85  15" stroke="black" fill="none" stroke-width="3" opacity="0" />
+<path id="x1" d="M 115  15 L 185  85 Z M 115  85 L 185  15" stroke="black" fill="none" stroke-width="3" opacity="0" />
+<path id="x2" d="M 215  15 L 285  85 Z M 215  85 L 285  15" stroke="black" fill="none" stroke-width="3" opacity="0" />
+
+<path id="x3" d="M   5 115 L  85 185 Z M   5 185 L  85 115" stroke="black" fill="none" stroke-width="3" opacity="0" />
+<path id="x4" d="M 115 115 L 185 185 Z M 115 185 L 185 115" stroke="black" fill="none" stroke-width="3" opacity="0" />
+<path id="x5" d="M 215 115 L 285 185 Z M 215 185 L 285 115" stroke="black" fill="none" stroke-width="3" opacity="0" />
+
+<path id="x6" d="M   5 215 L  85 285 Z M   5 285 L  85 215" stroke="black" fill="none" stroke-width="3" opacity="0" />
+<path id="x7" d="M 115 215 L 185 285 Z M 115 285 L 185 215" stroke="black" fill="none" stroke-width="3" opacity="0" />
+<path id="x8" d="M 215 215 L 285 285 Z M 215 285 L 285 215" stroke="black" fill="none" stroke-width="3" opacity="0" />
+
+<!-- rectangles -->
+<rect id="r0" onclick="onclick_r(&quot;r0&quot;)" x="5"   y="5" height="30%" width="30%" opacity="0" />
+<rect id="r1" onclick="onclick_r(&quot;r1&quot;)" x="105" y="5" height="30%" width="30%" opacity="0" />
+<rect id="r2" onclick="onclick_r(&quot;r2&quot;)" x="205" y="5" height="30%" width="30%" opacity="0" />
+
+<rect id="r3" onclick="onclick_r(&quot;r3&quot;)" x="5"   y="105" height="30%" width="30%" opacity="0" />
+<rect id="r4" onclick="onclick_r(&quot;r4&quot;)" x="105" y="105" height="30%" width="30%" opacity="0" />
+<rect id="r5" onclick="onclick_r(&quot;r5&quot;)" x="205" y="105" height="30%" width="30%" opacity="0" />
+
+<rect id="r6" onclick="onclick_r(&quot;r6&quot;)" x="5"   y="205" height="30%" width="30%" opacity="0" />
+<rect id="r7" onclick="onclick_r(&quot;r7&quot;)" x="105" y="205" height="30%" width="30%" opacity="0" />
+<rect id="r8" onclick="onclick_r(&quot;r8&quot;)" x="205" y="205" height="30%" width="30%" opacity="0" />
+
+</svg>

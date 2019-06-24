@@ -1,0 +1,34 @@
+{
+    "short_name": "Tic Tac Toe",
+    "name": "Tic Tac Toe",
+    "icons": [{
+	"src": "tic-tac-toe-128.png",
+	"sizes": "128x128",
+	"type": "image/png"
+    }, {
+	"src": "tic-tac-toe-144.png",
+	"sizes": "144x144",
+	"type": "image/png"
+    }, {
+	"src": "tic-tac-toe-152.png",
+	"sizes": "152x152",
+	"type": "image/png"
+    }, {
+	"src": "tic-tac-toe-192.png",
+	"sizes": "192x192",
+	"type": "image/png"
+    }, {
+	"src": "tic-tac-toe-256.png",
+	"sizes": "256x256",
+	"type": "image/png"
+    }, {
+	"src": "tic-tac-toe-512.png",
+	"sizes": "512x512",
+	"type": "image/png"
+    }],
+    "lang": "en-US",
+    "start_url": "https://marcoparrone.github.io/tic-tac-toe/",
+    "display": "standalone",
+    "theme_color": "#ffffff",
+    "background_color": "#000000"
+}
