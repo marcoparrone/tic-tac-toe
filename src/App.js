@@ -145,14 +145,14 @@ class Board extends React.Component {
                 <line id="x5a" x1="69%" y1="36%" x2="96%" y2="63%" strokeWidth="3" stroke="white" opacity={this.state.board[6] === 2 ? 1 : 0} />
                 <line id="x5b" x1="69%" y1="63%" x2="96%" y2="36%" strokeWidth="3" stroke="white" opacity={this.state.board[6] === 2 ? 1 : 0} />
 
-                <line id="x3a" x1="3%"  y1="69%" x2="30%" y2="96%" strokeWidth="3" stroke="white" opacity={this.state.board[7] === 2 ? 1 : 0} />
-                <line id="x3b" x1="3%"  y1="96%" x2="30%" y2="69%" strokeWidth="3" stroke="white" opacity={this.state.board[7] === 2 ? 1 : 0} />
+                <line id="x6a" x1="3%"  y1="69%" x2="30%" y2="96%" strokeWidth="3" stroke="white" opacity={this.state.board[7] === 2 ? 1 : 0} />
+                <line id="x6b" x1="3%"  y1="96%" x2="30%" y2="69%" strokeWidth="3" stroke="white" opacity={this.state.board[7] === 2 ? 1 : 0} />
 
-                <line id="x4a" x1="36%" y1="69%" x2="63%" y2="96%" strokeWidth="3" stroke="white" opacity={this.state.board[8] === 2 ? 1 : 0} />
-                <line id="x4b" x1="36%" y1="96%" x2="63%" y2="69%" strokeWidth="3" stroke="white" opacity={this.state.board[8] === 2 ? 1 : 0} />
+                <line id="x7a" x1="36%" y1="69%" x2="63%" y2="96%" strokeWidth="3" stroke="white" opacity={this.state.board[8] === 2 ? 1 : 0} />
+                <line id="x7b" x1="36%" y1="96%" x2="63%" y2="69%" strokeWidth="3" stroke="white" opacity={this.state.board[8] === 2 ? 1 : 0} />
 
-                <line id="x5a" x1="69%" y1="69%" x2="96%" y2="96%" strokeWidth="3" stroke="white" opacity={this.state.board[9] === 2 ? 1 : 0} />
-                <line id="x5b" x1="69%" y1="96%" x2="96%" y2="69%" strokeWidth="3" stroke="white" opacity={this.state.board[9] === 2 ? 1 : 0} />
+                <line id="x8a" x1="69%" y1="69%" x2="96%" y2="96%" strokeWidth="3" stroke="white" opacity={this.state.board[9] === 2 ? 1 : 0} />
+                <line id="x8b" x1="69%" y1="96%" x2="96%" y2="69%" strokeWidth="3" stroke="white" opacity={this.state.board[9] === 2 ? 1 : 0} />
 
                 <rect id="r0" onClick={event => this.main_loop_helper(1)} x="0%"  y="0%"  height="33%" width="33%" opacity="0" />
                 <rect id="r1" onClick={event => this.main_loop_helper(2)} x="33%" y="0%"  height="33%" width="33%" opacity="0" />
