@@ -137,7 +137,7 @@ class Board extends React.Component {
                         onClick={() => this.resetgame()}
                       />
                     </TopAppBarIcon>
-                    <TopAppBarIcon actionItem tabIndex={1}>
+                    <TopAppBarIcon actionItem tabIndex={0}>
                       <MaterialIcon 
                         aria-label="settings" 
                         hasRipple 
@@ -145,7 +145,7 @@ class Board extends React.Component {
                         onClick={() => alert("FIXME!: to implement.")}
                       />
                     </TopAppBarIcon>
-                    <TopAppBarIcon actionItem tabIndex={2}>
+                    <TopAppBarIcon actionItem tabIndex={0}>
                       <MaterialIcon 
                         aria-label="about" 
                         hasRipple 
