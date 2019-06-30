@@ -11,6 +11,7 @@
 			"dependencies": {
 						"@material-ui/core": "^4.1.2",
 						"@material-ui/icons": "^4.2.1",
+						"@material/dialog": "^3.0.0",
 						"@material/react-material-icon": "^0.13.0",
 						"@material/react-top-app-bar": "^0.13.0",
 						"@material/snackbar": "^3.0.0",

@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
+import {check_end, get_at_level} from './tris.js';
+
 import '@material/react-top-app-bar/dist/top-app-bar.css';
 import '@material/react-material-icon/dist/material-icon.css';
-import "@material/snackbar/dist/mdc.snackbar.css";
-import {check_end, get_at_level} from './tris.js';
 
 import TopAppBar, {
   TopAppBarFixedAdjust, 
@@ -14,8 +14,11 @@ import TopAppBar, {
 } from '@material/react-top-app-bar';
 import MaterialIcon from '@material/react-material-icon';
 
+import "@material/snackbar/dist/mdc.snackbar.css";
 import {MDCSnackbar} from '@material/snackbar';
 
+import "@material/dialog/dist/mdc.dialog.css";
+import {MDCDialog} from '@material/dialog';
 
 class Board extends React.Component {
     constructor (props) {
@@ -132,13 +135,22 @@ class Board extends React.Component {
         });
     }
 
-    resetgame()
-    {
+    resetgame() {
         this.newgame(this.state.board);
         this.forceUpdate();
         if (process.env.NODE_ENV === 'development') {
             console.log(this.state.board);
         }
+    }
+
+    about() {
+        const dialog = new MDCDialog(this.ticTacToeRef.current.querySelector('#about'));
+        dialog.open();
+    }
+
+    settings() {
+        const dialog = new MDCDialog(this.ticTacToeRef.current.querySelector('#settings'));
+        dialog.open();
     }
 
     render () {
@@ -166,7 +178,7 @@ class Board extends React.Component {
                         aria-label="settings" 
                         hasRipple 
                         icon='settings' 
-                        onClick={() => alert("FIXME!: to implement.")}
+                        onClick={() => this.settings()}
                       />
                     </TopAppBarIcon>
                     <TopAppBarIcon actionItem tabIndex={0}>
@@ -174,7 +186,7 @@ class Board extends React.Component {
                         aria-label="about" 
                         hasRipple 
                         icon='help' 
-                        onClick={() => alert("FIXME!: to implement.")}
+                        onClick={() => this.about()}
                       />
                     </TopAppBarIcon>
                   </TopAppBarSection>
@@ -238,11 +250,58 @@ class Board extends React.Component {
                   <rect id="r7" onClick={event => this.main_loop_helper(8)} x="33%" y="66%" height="33%" width="33%" opacity="0" />
                   <rect id="r8" onClick={event => this.main_loop_helper(9)} x="66%" y="66%" height="33%" width="33%" opacity="0" />
                 </svg><br/>
-                <div className="mdc-snackbar" id="win"><div className="mdc-snackbar__surface"><div className="mdc-snackbar__label" role="status" aria-live="polite">You won!</div> </div></div>
-                <div className="mdc-snackbar" id="lose"><div className="mdc-snackbar__surface"><div className="mdc-snackbar__label" role="status" aria-live="polite">You lost!</div> </div></div>
-                <div className="mdc-snackbar" id="draw"><div className="mdc-snackbar__surface"><div className="mdc-snackbar__label" role="status" aria-live="polite">Game drawn!</div> </div></div>
-                <div className="mdc-snackbar" id="gameover"><div className="mdc-snackbar__surface"><div className="mdc-snackbar__label" role="status" aria-live="polite">Game over!</div> </div></div>
+                <div className="mdc-snackbar" id="win"><div className="mdc-snackbar__surface"><div className="mdc-snackbar__label" role="status" aria-live="polite">You won!</div></div></div>
+                <div className="mdc-snackbar" id="lose"><div className="mdc-snackbar__surface"><div className="mdc-snackbar__label" role="status" aria-live="polite">You lost!</div></div></div>
+                <div className="mdc-snackbar" id="draw"><div className="mdc-snackbar__surface"><div className="mdc-snackbar__label" role="status" aria-live="polite">Game drawn!</div></div></div>
+                <div className="mdc-snackbar" id="gameover"><div className="mdc-snackbar__surface"><div className="mdc-snackbar__label" role="status" aria-live="polite">Game over!</div></div></div>
                 <div className="mdc-snackbar" id="notempty"><div className="mdc-snackbar__surface"><div className="mdc-snackbar__label" role="status" aria-live="polite">Selected cell is not empty!</div> </div></div>
+                <div className="mdc-dialog" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title" aria-describedby="my-dialog-content" id="settings">
+                  <div className="mdc-dialog__container">
+                    <div className="mdc-dialog__surface">
+                      <h2 className="mdc-dialog__title" id="my-dialog-title">Settings</h2>
+                      <div className="mdc-dialog__content" id="my-dialog-content">
+                        <p>Settings</p>
+                      </div>
+                      <footer className="mdc-dialog__actions">
+                        <button type="button" className="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes">
+                          <span className="mdc-button__label">Close</span>
+                        </button>
+                      </footer>
+                    </div>
+                  </div>
+                  <div className="mdc-dialog__scrim"></div>
+                </div>
+                <div className="mdc-dialog" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title" aria-describedby="my-dialog-content" id="about">
+                  <div className="mdc-dialog__container">
+                    <div className="mdc-dialog__surface">
+                      <h2 className="mdc-dialog__title" id="my-dialog-title">About</h2>
+                      <div className="mdc-dialog__content" id="my-dialog-content">
+                        <p>Copyright &copy; 2000,2002,2017,2019 Marco Parrone</p>
+                        <p>Permission is hereby granted, free of charge, to any person obtaining a copy
+                          of this software and associated documentation files (the "Software"), to deal
+                          in the Software without restriction, including without limitation the rights
+                          to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                          copies of the Software, and to permit persons to whom the Software is
+                          furnished to do so, subject to the following conditions:</p>
+                        <p>The above copyright notice and this permission notice shall be included in all
+                          copies or substantial portions of the Software.</p>
+                        <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                          IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                          FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                          AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                          LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                          OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+                          SOFTWARE.</p>
+                      </div>
+                      <footer className="mdc-dialog__actions">
+                        <button type="button" className="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes">
+                          <span className="mdc-button__label">Close</span>
+                        </button>
+                      </footer>
+                    </div>
+                  </div>
+                  <div className="mdc-dialog__scrim"></div>
+                </div>
               </TopAppBarFixedAdjust>
             </div>
         );
