@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import '@material/react-top-app-bar/dist/top-app-bar.css';
 import '@material/react-material-icon/dist/material-icon.css';
+import "@material/snackbar/dist/mdc.snackbar.css";
 import {check_end, get_at_level} from './tris.js';
 
 import TopAppBar, {
@@ -13,21 +14,26 @@ import TopAppBar, {
 } from '@material/react-top-app-bar';
 import MaterialIcon from '@material/react-material-icon';
 
+import {MDCSnackbar} from '@material/snackbar';
+
+
 class Board extends React.Component {
     constructor (props) {
         var strk = getComputedStyle(document.documentElement).getPropertyValue('--color-scheme-text-color');
-	super(props);
+        super(props);
         this.state = {
             board: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             level: 9,
             stroke: strk
         };
+        this.ticTacToeRef = React.createRef();
     }
-    
+
     insert_in_board(position, board) {
         var strk = getComputedStyle(document.documentElement).getPropertyValue('--color-scheme-text-color');
+        var snackbarNotEmpty = new MDCSnackbar(this.ticTacToeRef.current.querySelector('#notempty'));
         if (board[position] !== 0) {
-            alert("Selected cell is not empty!");
+            snackbarNotEmpty.open();
             return true;
         }
         board[position] = 2;
@@ -56,11 +62,14 @@ class Board extends React.Component {
     end_game_if_needed(board) {
         var strk = getComputedStyle(document.documentElement).getPropertyValue('--color-scheme-text-color');
         var checked_val = check_end(board);
+        var snackbarWin = new MDCSnackbar(this.ticTacToeRef.current.querySelector('#win'));
+        var snackbarLose = new MDCSnackbar(this.ticTacToeRef.current.querySelector('#lose'));
+        var snackbarDraw = new MDCSnackbar(this.ticTacToeRef.current.querySelector('#draw'));
         switch (checked_val) {
         case 0:
             break;
         case "WIN":
-            alert("You won!");
+            snackbarWin.open();
             board[0] = 1;
             this.setState = ({
                 board: board,
@@ -69,7 +78,7 @@ class Board extends React.Component {
             });
             break;
         case "LOSE":
-            alert("You lost!");
+            snackbarLose.open();
             board[0] = 1;
             this.setState = ({
                 board: board,
@@ -78,7 +87,7 @@ class Board extends React.Component {
             });
             break;
         case "DRAW":
-            alert("Game drawn!");
+            snackbarDraw.open();
             board[0] = 1;
             this.setState = ({
                 board: board,
@@ -92,14 +101,17 @@ class Board extends React.Component {
     }
     
     main_loop_helper(position) {
+        var snackbarGO = new MDCSnackbar(this.ticTacToeRef.current.querySelector('#gameover'));
         if (this.state.board[0] === 1) {
-            alert("Game over!");
+            snackbarGO.open();
             return false;
         }
         if (this.insert_in_board(position,this.state.board)) {
             return false;
         }
-        this.insert_in_board_cpu(this.state.board);
+        if (check_end(this.state.board) === 0) {
+            this.insert_in_board_cpu(this.state.board);
+        }
         this.forceUpdate();
         this.end_game_if_needed(this.state.board);
         if (process.env.NODE_ENV === 'development') {
@@ -131,7 +143,7 @@ class Board extends React.Component {
 
     render () {
         return (
-            <div>
+            <div ref={this.ticTacToeRef}>
               <TopAppBar>
                 <TopAppBarRow>
                   <TopAppBarSection align='start'>
@@ -226,6 +238,11 @@ class Board extends React.Component {
                   <rect id="r7" onClick={event => this.main_loop_helper(8)} x="33%" y="66%" height="33%" width="33%" opacity="0" />
                   <rect id="r8" onClick={event => this.main_loop_helper(9)} x="66%" y="66%" height="33%" width="33%" opacity="0" />
                 </svg><br/>
+                <div className="mdc-snackbar" id="win"><div className="mdc-snackbar__surface"><div className="mdc-snackbar__label" role="status" aria-live="polite">You won!</div> </div></div>
+                <div className="mdc-snackbar" id="lose"><div className="mdc-snackbar__surface"><div className="mdc-snackbar__label" role="status" aria-live="polite">You lost!</div> </div></div>
+                <div className="mdc-snackbar" id="draw"><div className="mdc-snackbar__surface"><div className="mdc-snackbar__label" role="status" aria-live="polite">Game drawn!</div> </div></div>
+                <div className="mdc-snackbar" id="gameover"><div className="mdc-snackbar__surface"><div className="mdc-snackbar__label" role="status" aria-live="polite">Game over!</div> </div></div>
+                <div className="mdc-snackbar" id="notempty"><div className="mdc-snackbar__surface"><div className="mdc-snackbar__label" role="status" aria-live="polite">Selected cell is not empty!</div> </div></div>
               </TopAppBarFixedAdjust>
             </div>
         );
