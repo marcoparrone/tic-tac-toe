@@ -15,14 +15,17 @@ import MaterialIcon from '@material/react-material-icon';
 
 class Board extends React.Component {
     constructor (props) {
+        var strk = getComputedStyle(document.documentElement).getPropertyValue('--color-scheme-text-color');
 	super(props);
         this.state = {
             board: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            level: 9
+            level: 9,
+            stroke: strk
         };
     }
     
     insert_in_board(position, board) {
+        var strk = getComputedStyle(document.documentElement).getPropertyValue('--color-scheme-text-color');
         if (board[position] !== 0) {
             alert("Selected cell is not empty!");
             return true;
@@ -30,24 +33,28 @@ class Board extends React.Component {
         board[position] = 2;
         this.setState = ({
             board: board,
-            level: this.state.level
+            level: this.state.level,
+            stroke: strk
         });
         return false;
     }
     
     insert_in_board_cpu(board) {
+        var strk = getComputedStyle(document.documentElement).getPropertyValue('--color-scheme-text-color');
         var entry = get_at_level(board, this.state.level);
         if (entry !== 0) {
             board[entry] = 1;
             this.setState = ({
                 board: board,
-                level: this.state.level
+                level: this.state.level,
+                stroke: strk
             });
         }
         return entry;
     }
 
     end_game_if_needed(board) {
+        var strk = getComputedStyle(document.documentElement).getPropertyValue('--color-scheme-text-color');
         var checked_val = check_end(board);
         switch (checked_val) {
         case 0:
@@ -57,7 +64,8 @@ class Board extends React.Component {
             board[0] = 1;
             this.setState = ({
                 board: board,
-                level: this.state.level
+                level: this.state.level,
+                stroke: strk
             });
             break;
         case "LOSE":
@@ -65,7 +73,8 @@ class Board extends React.Component {
             board[0] = 1;
             this.setState = ({
                 board: board,
-                level: this.state.level
+                level: this.state.level,
+                stroke: strk
             });
             break;
         case "DRAW":
@@ -73,7 +82,8 @@ class Board extends React.Component {
             board[0] = 1;
             this.setState = ({
                 board: board,
-                level: this.state.level
+                level: this.state.level,
+                stroke: strk
             });
             break;
         default:
@@ -99,12 +109,14 @@ class Board extends React.Component {
     }
 
     newgame(board) {
+        var strk = getComputedStyle(document.documentElement).getPropertyValue('--color-scheme-text-color');
         for (var i = 0; i < 11; i++) {
             board[i]=0;
         }
         this.setState = ({
             board: board,
-            level: this.state.level
+            level: this.state.level,
+            stroke: strk
         });
     }
 
@@ -158,49 +170,49 @@ class Board extends React.Component {
               </TopAppBar>
               <TopAppBarFixedAdjust>
                 <svg width="100" height="100">
-                  <line x1="33%" y1="0"   x2="33%" y2="99%" strokeWidth="1" stroke="white" />
-                  <line x1="66%" y1="0"   x2="66%" y2="99%" strokeWidth="1" stroke="white" />
-                  <line x1="0"   y1="33%" x2="99%" y2="33%" strokeWidth="1" stroke="white" />
-                  <line x1="0"   y1="66%" x2="99%" y2="66%" strokeWidth="1" stroke="white" />
+                  <line x1="33%" y1="0"   x2="33%" y2="99%" strokeWidth="1" stroke={this.state.stroke} />
+                  <line x1="66%" y1="0"   x2="66%" y2="99%" strokeWidth="1" stroke={this.state.stroke} />
+                  <line x1="0"   y1="33%" x2="99%" y2="33%" strokeWidth="1" stroke={this.state.stroke} />
+                  <line x1="0"   y1="66%" x2="99%" y2="66%" strokeWidth="1" stroke={this.state.stroke} />
 
-                  <circle id="c0" cx="16.5%" cy="16.5%" r="15%" fill="none" stroke="white" strokeWidth="3" opacity={this.state.board[1] === 1 ? 1 : 0} />
-                  <circle id="c1" cx="49.5%" cy="16.5%" r="15%" fill="none" stroke="white" strokeWidth="3" opacity={this.state.board[2] === 1 ? 1 : 0} />
-                  <circle id="c2" cx="82.5%" cy="16.5%" r="15%" fill="none" stroke="white" strokeWidth="3" opacity={this.state.board[3] === 1 ? 1 : 0} />
+                  <circle id="c0" cx="16.5%" cy="16.5%" r="15%" fill="none" stroke={this.state.stroke} strokeWidth="3" opacity={this.state.board[1] === 1 ? 1 : 0} />
+                  <circle id="c1" cx="49.5%" cy="16.5%" r="15%" fill="none" stroke={this.state.stroke} strokeWidth="3" opacity={this.state.board[2] === 1 ? 1 : 0} />
+                  <circle id="c2" cx="82.5%" cy="16.5%" r="15%" fill="none" stroke={this.state.stroke} strokeWidth="3" opacity={this.state.board[3] === 1 ? 1 : 0} />
 
-                  <circle id="c3" cx="16.5%" cy="49.5%" r="15%" fill="none" stroke="white" strokeWidth="3" opacity={this.state.board[4] === 1 ? 1 : 0} />
-                  <circle id="c4" cx="49.5%" cy="49.5%" r="15%" fill="none" stroke="white" strokeWidth="3" opacity={this.state.board[5] === 1 ? 1 : 0} />
-                  <circle id="c5" cx="82.5%" cy="49.5%" r="15%" fill="none" stroke="white" strokeWidth="3" opacity={this.state.board[6] === 1 ? 1 : 0} />
+                  <circle id="c3" cx="16.5%" cy="49.5%" r="15%" fill="none" stroke={this.state.stroke} strokeWidth="3" opacity={this.state.board[4] === 1 ? 1 : 0} />
+                  <circle id="c4" cx="49.5%" cy="49.5%" r="15%" fill="none" stroke={this.state.stroke} strokeWidth="3" opacity={this.state.board[5] === 1 ? 1 : 0} />
+                  <circle id="c5" cx="82.5%" cy="49.5%" r="15%" fill="none" stroke={this.state.stroke} strokeWidth="3" opacity={this.state.board[6] === 1 ? 1 : 0} />
 
-                  <circle id="c6" cx="16.5%" cy="82.5%" r="15%" fill="none" stroke="white" strokeWidth="3" opacity={this.state.board[7] === 1 ? 1 : 0} />
-                  <circle id="c7" cx="49.5%" cy="82.5%" r="15%" fill="none" stroke="white" strokeWidth="3" opacity={this.state.board[8] === 1 ? 1 : 0} />
-                  <circle id="c8" cx="82.5%" cy="82.5%" r="15%" fill="none" stroke="white" strokeWidth="3" opacity={this.state.board[9] === 1 ? 1 : 0} />
+                  <circle id="c6" cx="16.5%" cy="82.5%" r="15%" fill="none" stroke={this.state.stroke} strokeWidth="3" opacity={this.state.board[7] === 1 ? 1 : 0} />
+                  <circle id="c7" cx="49.5%" cy="82.5%" r="15%" fill="none" stroke={this.state.stroke} strokeWidth="3" opacity={this.state.board[8] === 1 ? 1 : 0} />
+                  <circle id="c8" cx="82.5%" cy="82.5%" r="15%" fill="none" stroke={this.state.stroke} strokeWidth="3" opacity={this.state.board[9] === 1 ? 1 : 0} />
 
-                  <line id="x0a" x1="3%"  y1="3%"  x2="30%" y2="30%" strokeWidth="3" stroke="white" opacity={this.state.board[1] === 2 ? 1 : 0} />
-                  <line id="x0b" x1="3%"  y1="30%" x2="30%" y2="3%"  strokeWidth="3" stroke="white" opacity={this.state.board[1] === 2 ? 1 : 0} />
+                  <line id="x0a" x1="3%"  y1="3%"  x2="30%" y2="30%" strokeWidth="3" stroke={this.state.stroke} opacity={this.state.board[1] === 2 ? 1 : 0} />
+                  <line id="x0b" x1="3%"  y1="30%" x2="30%" y2="3%"  strokeWidth="3" stroke={this.state.stroke} opacity={this.state.board[1] === 2 ? 1 : 0} />
 
-                  <line id="x1a" x1="36%" y1="3%"  x2="63%" y2="30%" strokeWidth="3" stroke="white" opacity={this.state.board[2] === 2 ? 1 : 0} />
-                  <line id="x1b" x1="36%" y1="30%" x2="63%" y2="3%"  strokeWidth="3" stroke="white" opacity={this.state.board[2] === 2 ? 1 : 0} />
+                  <line id="x1a" x1="36%" y1="3%"  x2="63%" y2="30%" strokeWidth="3" stroke={this.state.stroke} opacity={this.state.board[2] === 2 ? 1 : 0} />
+                  <line id="x1b" x1="36%" y1="30%" x2="63%" y2="3%"  strokeWidth="3" stroke={this.state.stroke} opacity={this.state.board[2] === 2 ? 1 : 0} />
 
-                  <line id="x2a" x1="69%" y1="3%"  x2="96%" y2="30%" strokeWidth="3" stroke="white" opacity={this.state.board[3] === 2 ? 1 : 0} />
-                  <line id="x2b" x1="69%" y1="30%" x2="96%" y2="3%"  strokeWidth="3" stroke="white" opacity={this.state.board[3] === 2 ? 1 : 0} />
+                  <line id="x2a" x1="69%" y1="3%"  x2="96%" y2="30%" strokeWidth="3" stroke={this.state.stroke} opacity={this.state.board[3] === 2 ? 1 : 0} />
+                  <line id="x2b" x1="69%" y1="30%" x2="96%" y2="3%"  strokeWidth="3" stroke={this.state.stroke} opacity={this.state.board[3] === 2 ? 1 : 0} />
 
-                  <line id="x3a" x1="3%"  y1="36%" x2="30%" y2="63%" strokeWidth="3" stroke="white" opacity={this.state.board[4] === 2 ? 1 : 0} />
-                  <line id="x3b" x1="3%"  y1="63%" x2="30%" y2="36%" strokeWidth="3" stroke="white" opacity={this.state.board[4] === 2 ? 1 : 0} />
+                  <line id="x3a" x1="3%"  y1="36%" x2="30%" y2="63%" strokeWidth="3" stroke={this.state.stroke} opacity={this.state.board[4] === 2 ? 1 : 0} />
+                  <line id="x3b" x1="3%"  y1="63%" x2="30%" y2="36%" strokeWidth="3" stroke={this.state.stroke} opacity={this.state.board[4] === 2 ? 1 : 0} />
 
-                  <line id="x4a" x1="36%" y1="36%" x2="63%" y2="63%" strokeWidth="3" stroke="white" opacity={this.state.board[5] === 2 ? 1 : 0} />
-                  <line id="x4b" x1="36%" y1="63%" x2="63%" y2="36%" strokeWidth="3" stroke="white" opacity={this.state.board[5] === 2 ? 1 : 0} />
+                  <line id="x4a" x1="36%" y1="36%" x2="63%" y2="63%" strokeWidth="3" stroke={this.state.stroke} opacity={this.state.board[5] === 2 ? 1 : 0} />
+                  <line id="x4b" x1="36%" y1="63%" x2="63%" y2="36%" strokeWidth="3" stroke={this.state.stroke} opacity={this.state.board[5] === 2 ? 1 : 0} />
 
-                  <line id="x5a" x1="69%" y1="36%" x2="96%" y2="63%" strokeWidth="3" stroke="white" opacity={this.state.board[6] === 2 ? 1 : 0} />
-                  <line id="x5b" x1="69%" y1="63%" x2="96%" y2="36%" strokeWidth="3" stroke="white" opacity={this.state.board[6] === 2 ? 1 : 0} />
+                  <line id="x5a" x1="69%" y1="36%" x2="96%" y2="63%" strokeWidth="3" stroke={this.state.stroke} opacity={this.state.board[6] === 2 ? 1 : 0} />
+                  <line id="x5b" x1="69%" y1="63%" x2="96%" y2="36%" strokeWidth="3" stroke={this.state.stroke} opacity={this.state.board[6] === 2 ? 1 : 0} />
 
-                  <line id="x6a" x1="3%"  y1="69%" x2="30%" y2="96%" strokeWidth="3" stroke="white" opacity={this.state.board[7] === 2 ? 1 : 0} />
-                  <line id="x6b" x1="3%"  y1="96%" x2="30%" y2="69%" strokeWidth="3" stroke="white" opacity={this.state.board[7] === 2 ? 1 : 0} />
+                  <line id="x6a" x1="3%"  y1="69%" x2="30%" y2="96%" strokeWidth="3" stroke={this.state.stroke} opacity={this.state.board[7] === 2 ? 1 : 0} />
+                  <line id="x6b" x1="3%"  y1="96%" x2="30%" y2="69%" strokeWidth="3" stroke={this.state.stroke} opacity={this.state.board[7] === 2 ? 1 : 0} />
 
-                  <line id="x7a" x1="36%" y1="69%" x2="63%" y2="96%" strokeWidth="3" stroke="white" opacity={this.state.board[8] === 2 ? 1 : 0} />
-                  <line id="x7b" x1="36%" y1="96%" x2="63%" y2="69%" strokeWidth="3" stroke="white" opacity={this.state.board[8] === 2 ? 1 : 0} />
+                  <line id="x7a" x1="36%" y1="69%" x2="63%" y2="96%" strokeWidth="3" stroke={this.state.stroke} opacity={this.state.board[8] === 2 ? 1 : 0} />
+                  <line id="x7b" x1="36%" y1="96%" x2="63%" y2="69%" strokeWidth="3" stroke={this.state.stroke} opacity={this.state.board[8] === 2 ? 1 : 0} />
 
-                  <line id="x8a" x1="69%" y1="69%" x2="96%" y2="96%" strokeWidth="3" stroke="white" opacity={this.state.board[9] === 2 ? 1 : 0} />
-                  <line id="x8b" x1="69%" y1="96%" x2="96%" y2="69%" strokeWidth="3" stroke="white" opacity={this.state.board[9] === 2 ? 1 : 0} />
+                  <line id="x8a" x1="69%" y1="69%" x2="96%" y2="96%" strokeWidth="3" stroke={this.state.stroke} opacity={this.state.board[9] === 2 ? 1 : 0} />
+                  <line id="x8b" x1="69%" y1="96%" x2="96%" y2="69%" strokeWidth="3" stroke={this.state.stroke} opacity={this.state.board[9] === 2 ? 1 : 0} />
 
                   <rect id="r0" onClick={event => this.main_loop_helper(1)} x="0%"  y="0%"  height="33%" width="33%" opacity="0" />
                   <rect id="r1" onClick={event => this.main_loop_helper(2)} x="33%" y="0%"  height="33%" width="33%" opacity="0" />
@@ -223,9 +235,7 @@ class Board extends React.Component {
 function App() {
     return (
         <div className="App">
-          <header className="App-header">
-            <Board/>
-          </header>
+          <Board/>
         </div>
     );
 }

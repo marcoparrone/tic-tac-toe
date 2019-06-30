@@ -1,6 +1,25 @@
+:root {
+    --color-scheme-background:white;
+    --color-scheme-text-color:black;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --color-scheme-background:white;
+        --color-scheme-text-color:black;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-scheme-background:black;
+        --color-scheme-text-color:white;
+    }
+}
+
 body {
-  color: white;
-  background-color: black;
+    background: var(--color-scheme-background);
+    color: var(--color-scheme-text-color);
 }
 
 label, input {
