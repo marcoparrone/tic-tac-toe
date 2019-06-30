@@ -209,7 +209,7 @@ class Board extends React.Component {
                 </TopAppBarRow>
               </TopAppBar>
               <TopAppBarFixedAdjust>
-                <svg width="100" height="100">
+                <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
                   <line x1="33%" y1="0"   x2="33%" y2="99%" strokeWidth="1" stroke={stroke} />
                   <line x1="66%" y1="0"   x2="66%" y2="99%" strokeWidth="1" stroke={stroke} />
                   <line x1="0"   y1="33%" x2="99%" y2="33%" strokeWidth="1" stroke={stroke} />
