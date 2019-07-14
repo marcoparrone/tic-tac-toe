@@ -27,6 +27,7 @@ class Board extends React.Component {
     constructor (props) {
         super(props);
         this.board = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        this.level = 9;
         this.state = {
             board: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             level: 9
@@ -36,6 +37,8 @@ class Board extends React.Component {
         this.dialog = null;
         this.slider = null;
 
+        this.loadBoard = this.loadBoard.bind(this);
+        this.saveBoard = this.saveBoard.bind(this);
         this.insert_in_board = this.insert_in_board.bind(this);
         this.insert_in_board_cpu = this.insert_in_board_cpu.bind(this);
         this.end_game_if_needed = this.end_game_if_needed.bind(this);
@@ -47,6 +50,31 @@ class Board extends React.Component {
         this.initSlider = this.initSlider.bind(this);
     }
 
+    loadBoard () {
+        let board = localStorage.getItem('board');
+        let level = localStorage.getItem('level');
+
+        if (board) {
+            this.board = JSON.parse(board);
+            if (level) {
+                this.level = level;
+            }
+            this.setState({
+                board: this.board,
+                level: this.level
+            });
+        }
+    }
+
+    saveBoard () {
+        this.setState({
+            board: this.board,
+            level: this.level
+        });
+        localStorage.setItem('board', JSON.stringify(this.board));
+        localStorage.setItem('level', this.level);
+    }
+
     insert_in_board(position) {
         const snackbarNotEmpty = new MDCSnackbar(this.ticTacToeRef.current.querySelector('#notempty'));
         if (this.board[position] !== 0) {
@@ -54,22 +82,16 @@ class Board extends React.Component {
             return true;
         }
         this.board[position] = 2;
-        this.setState({
-            board: this.board,
-            level: this.state.level
-        });
+        this.saveBoard();
         this.forceUpdate();
         return false;
     }
     
     insert_in_board_cpu() {
-        let entry = get_at_level(this.board, this.state.level);
+        let entry = get_at_level(this.board, this.level);
         if (entry !== 0) {
             this.board[entry] = 1;
-            this.setState ({
-                board: this.board,
-                level: this.state.level
-            });
+            this.saveBoard();
             this.forceUpdate();
         }
         return entry;
@@ -86,26 +108,17 @@ class Board extends React.Component {
         case "WIN":
             snackbarWin.open();
             this.board[0] = 1;
-            this.setState ({
-                board: this.board,
-                level: this.state.level
-            });
+            this.saveBoard();
             break;
         case "LOSE":
             snackbarLose.open();
             this.board[0] = 1;
-            this.setState ({
-                board: this.board,
-                level: this.state.level
-            });
+            this.saveBoard();
             break;
         case "DRAW":
             snackbarDraw.open();
             this.board[0] = 1;
-            this.setState ({
-                board: this.board,
-                level: this.state.level
-            });
+            this.saveBoard();
             break;
         default:
             break;
@@ -135,10 +148,7 @@ class Board extends React.Component {
         for (let i = 0; i < 11; i++) {
             this.board[i] = 0;
         }
-        this.setState ({
-            board: this.board,
-            level: this.state.level
-        });
+        this.saveBoard();
         this.forceUpdate();
     }
 
@@ -148,10 +158,12 @@ class Board extends React.Component {
     }
 
     updateLevel (lvl) {
+        this.level = lvl;
         this.setState ({
-            board: this.state.board,
-            level: lvl
+            board: this.board,
+            level: this.level
         });
+        this.saveBoard();
     }
 
     settings() {
@@ -166,6 +178,7 @@ class Board extends React.Component {
     componentDidMount() {
         this.dialog = new MDCDialog(this.ticTacToeRef.current.querySelector('#settings-dialog'));
         this.dialog.listen('MDCDialog:opened', () => this.initSlider());
+        this.loadBoard();
     }
 
     render () {
