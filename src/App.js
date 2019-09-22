@@ -23,6 +23,8 @@ import {MDCDialog} from '@material/dialog';
 import "@material/slider/dist/mdc.slider.css";
 import {MDCSlider} from '@material/slider';
 
+import "@fortawesome/fontawesome-free/css/all.css";
+
 class Board extends React.Component {
     constructor (props) {
         super(props);
@@ -331,6 +333,9 @@ class Board extends React.Component {
                           LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
                           OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
                           SOFTWARE.</p>
+
+                        <p><i className="fa fa-envelope fa-fw"> </i> Email: <a href="mailto:marco.parrone@gmail.com">marco.parrone@gmail.com</a><br />
+                          <i className="fab fa-github fa-fw"> </i> Github: <a href="https://github.com/marcoparrone/tic-tac-toe">https://github.com/marcoparrone/tic-tac-toe</a></p>
                       </div>
                       <footer className="mdc-dialog__actions">
                         <button type="button" className="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes">
