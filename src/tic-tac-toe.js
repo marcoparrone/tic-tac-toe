@@ -649,7 +649,7 @@ function draw() {
     homepage_top_y = webapp_get_y_for_maybe_multiline_strings_array([surf[9].label, surf[10].label, surf[11].label, surf[12].label, surf[13].label],
 								    "20pt Arial", 'white', 'black', 0, 0);
 
-    homepage_bottom_y = webapp_get_y_for_maybe_multiline_strings_array(["Copyright © ", "2020 ", "Marco Parrone ", "<marco.parrone@gmail.com>. ", "No Warranty."],
+    homepage_bottom_y = webapp_get_y_for_maybe_multiline_strings_array(["Copyright © ", "2020 ", "Marco Parrone ", "<marco@marcoparrone.com>. ", "No Warranty."],
 								       "10pt Arial", 'white', 'black', 0, cnv.height);
 
     grid = webapp_get_grid_with_topbar(1, homepage_bottom_y, homepage_top_y);
@@ -660,7 +660,7 @@ function draw() {
 
     webapp_draw_topbar(surf, 9, 15, "20pt Arial", 'white', 'yellow', 'black', selected);
 
-    webapp_draw_maybe_multiline_strings_array(["Copyright © ", "2020 ", "Marco Parrone ", "<marco.parrone@gmail.com>. ", "No Warranty."],
+    webapp_draw_maybe_multiline_strings_array(["Copyright © ", "2020 ", "Marco Parrone ", "<marco@marcoparrone.com>. ", "No Warranty."],
 					      "10pt Arial", 'white', 'black', 0, cnv.height);
 }
 
