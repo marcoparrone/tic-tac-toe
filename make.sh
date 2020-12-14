@@ -8,7 +8,7 @@ fi
 
 cp src/tic-tac-toe.js tmp/
 # compile JSFILE and service-worker.js
-if [ "$1" ==  "--dev" ]; then
+if [ "$1" =  "--dev" ]; then
         npm run start
 	cp src/manifest.json docs/
 	sed -e '/@JSFILECONTENT@/r tmp/tic-tac-toe.js' < src/index.html \
