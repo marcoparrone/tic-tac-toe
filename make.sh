@@ -16,7 +16,7 @@ if [ "$1" ==  "--dev" ]; then
 else
     	terser --compress --mangle --toplevel --verbose -o tmp/tic-tac-toe.min.js -- tmp/tic-tac-toe.js
         npm run build
-        sed -e '/@JSFILECONTENT@/r tmp/homepage.min.js' src/index.html | sed -e 's/@JSFILECONTENT@//g' \
+        sed -e '/@JSFILECONTENT@/r tmp/tic-tac-toe.min.js' src/index.html | sed -e 's/@JSFILECONTENT@//g' \
 	    |html-minifier --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes \
 			   --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype --minify-css true --minify-js true > docs/index.html
 	node src/minify-json.js < src/manifest.json > docs/manifest.json
