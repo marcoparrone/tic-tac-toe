@@ -6,17 +6,19 @@ if [ "$0" != "./make.sh" ]; then
 	exit 1
 fi
 
-JSFILE=$(echo "obase=15; $(date +%s)"|bc).js
-
+cp src/tic-tac-toe.js tmp/
 # compile JSFILE and service-worker.js
 if [ "$1" ==  "--dev" ]; then
-	cp src/manifest.json src/service-worker.js docs/
-	cp src/tic-tac-toe.js docs/${JSFILE}
-	sed "s/@JSFILE@/${JSFILE}/g" < src/index.html > docs/index.html
+        npm run start
+	cp src/manifest.json docs/
+	sed -e '/@JSFILECONTENT@/r tmp/tic-tac-toe.js' < src/index.html \
+	    |sed -e 's/@JSFILECONTENT@//g' > docs/index.html
 else
-	terser --compress --mangle --toplevel --verbose -o docs/${JSFILE} -- src/tic-tac-toe.js
-	terser --compress --mangle --toplevel --verbose -o docs/service-worker.js -- src/service-worker.js
-	html-minifier --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype --minify-css true --minify-js true src/index.html | sed "s/@JSFILE@/${JSFILE}/g" > docs/index.html
+    	terser --compress --mangle --toplevel --verbose -o tmp/tic-tac-toe.min.js -- tmp/tic-tac-toe.js
+        npm run build
+        sed -e '/@JSFILECONTENT@/r tmp/homepage.min.js' src/index.html | sed -e 's/@JSFILECONTENT@//g' \
+	    |html-minifier --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes \
+			   --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype --minify-css true --minify-js true > docs/index.html
 	node src/minify-json.js < src/manifest.json > docs/manifest.json
 fi
 

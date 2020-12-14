@@ -14,6 +14,8 @@
     <meta name="apple-mobile-web-app-title" content="Tic Tac Toe"> 
     <meta name="msapplication-TileImage" content="t-144.png">  
     <meta name="msapplication-TileColor" content="#000000">
+    <meta name="theme-color" content="white"/>
+    <script>"serviceWorker"in navigator&&window.addEventListener("load",()=>{navigator.serviceWorker.register("service-worker.js")});</script>
     <style>
       html, body {
 	  width:  100%;
@@ -41,6 +43,8 @@
   <body>
     <noscript>You need to enable JavaScript to view this website.</noscript>
     <canvas className="webapp" id="canvas" tabIndex="-1">ERROR: Cannot create canvas.</canvas>
-    <script type="text/javascript" src="@JSFILE@" async></script>
+    <script type="text/javascript" async>
+      @JSFILECONTENT@
+    </script>
   </body>
 </html>
