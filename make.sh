@@ -22,6 +22,8 @@ else
 	node src/minify-json.js < src/manifest.json > docs/manifest.json
 fi
 
+cp public/* dist/
+
 # start the http server for testing
 cd docs
 http-server
