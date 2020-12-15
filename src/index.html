@@ -16,35 +16,9 @@
     <meta name="msapplication-TileColor" content="#000000">
     <meta name="theme-color" content="white"/>
     <script>"serviceWorker"in navigator&&window.addEventListener("load",()=>{navigator.serviceWorker.register("service-worker.js")});</script>
-    <style>
-      html, body {
-	  width:  100%;
-	  height: 100%;
-	  margin: 0;
-	  border: 0;
-	  overflow: hidden; /*  Disable scrollbars */
-	  display: block;  /* No floating content on sides */
-      }
-      canvas.webapp {
-	  background-color: black;
-	  position: absolute;
-	  top: 0px;
-	  left: 0px;
-	  margin: 0px;
-	  border: 0;
-	  width: 100%;
-	  height: 100%;
-	  overflow: hidden;
-	  display: block;
-      }
-    </style>
-    <script>"serviceWorker"in navigator&&window.addEventListener("load",()=>{navigator.serviceWorker.register("service-worker.js")});</script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to view this website.</noscript>
     <canvas className="webapp" id="canvas" tabIndex="-1">ERROR: Cannot create canvas.</canvas>
-    <script type="text/javascript" async>
-      @JSFILECONTENT@
-    </script>
   </body>
 </html>

@@ -31,13 +31,13 @@ function webapp_init() {
     webapp_resize_canvas();
 }
 
-function webapp_resize_canvas() {
-    cnv = document.getElementById('canvas');
+export function webapp_resize_canvas() {
+    var cnv = document.getElementById('canvas');
     cnv.width = window.innerWidth;
     cnv.height = window.innerHeight;
 }
 
-function webapp_draw() {
+export function webapp_draw() {
     var cnv = document.getElementById('canvas');
     var ctx = cnv.getContext('2d');
     ctx.fillStyle = 'black';
@@ -49,7 +49,7 @@ function webapp_get_canvas() {
 }
 
 function webapp_get_context() {
-    cnv = document.getElementById('canvas');
+    var cnv = document.getElementById('canvas');
     return cnv.getContext('2d');
 }
 
@@ -203,6 +203,7 @@ function webapp_update_topbar_buttons_positions(buttons, first, last, font_heigh
     var totlength = cnv.width;
     var rowx = 0;
     var rowy = 0;
+    var rowlength = 0;
 
     for (i = first; i <= last; i++) {
         celllength = ctx.measureText(buttons[i].label).width;
@@ -579,6 +580,7 @@ function draw_cell_content(cell_id) {
 }
 
 function draw_cells_content() {
+    var i = 0;
     for (i = 0; i < 9; i++) {
 	draw_cell_content(i);
     }
@@ -641,7 +643,7 @@ function draw_board(x, y, w, h) {
     ctx.stroke();
 }
 
-function draw() {
+export function draw() {
     var grid;
     var homepage_bottom_y = 0;
     var homepage_top_y = 0;
@@ -664,7 +666,7 @@ function draw() {
 					      "10pt Arial", 'white', 'black', 0, cnv.height);
 }
 
-function mouse_handler(evt) {
+export function mouse_handler(evt) {
     switch (evt.type) {
     case 'mousedown':
     case 'touchend':
@@ -699,7 +701,7 @@ function mouse_handler(evt) {
     }
 }
 
-function keyboard_handler(evt) {
+export function keyboard_handler(evt) {
     var old_selected = selected;
     switch (evt.type) {
     case 'keypress':
@@ -742,7 +744,7 @@ function keyboard_handler(evt) {
     }
 }
 
-function app_init() {
+export function app_init() {
     cnv = webapp_get_canvas();
     ctx = webapp_get_context();
 
@@ -848,5 +850,3 @@ function app_init() {
     webapp_draw();
     draw();
 }
-
-app_init();
