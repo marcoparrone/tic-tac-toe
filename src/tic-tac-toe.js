@@ -484,8 +484,10 @@ function get_at_level() {
 function insert_in_board(position) {
     var cell;
     if (board[position] !== empty) {
-	surf[14].label = " Cell is not empty!";
-	webapp_draw_topbar(surf, 9, 15, "20pt Arial", 'white', 'yellow', 'black', selected);
+	if (check_end() === playing) {
+	    surf[14].label = " Cell is not empty!";
+	    webapp_draw_topbar(surf, 9, 15, "20pt Arial", 'white', 'yellow', 'black', selected);
+	}
     } else {
 	if (check_end() === playing) {
 	    board[position] = human;
