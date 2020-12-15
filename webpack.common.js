@@ -8,7 +8,7 @@
      app: './src/index2.js',
    },
    plugins: [
-     // new CleanWebpackPlugin(['dist/*']) for < v2 versions of CleanWebpackPlugin
+     // new CleanWebpackPlugin(['build/*']) for < v2 versions of CleanWebpackPlugin
      new CleanWebpackPlugin(),
        /*     new HtmlWebpackPlugin({
        title: 'Production',
@@ -21,6 +21,6 @@
    ],
    output: {
      filename: '[name].bundle.js',
-     path: path.resolve(__dirname, 'docs'),
+     path: path.resolve(__dirname, 'build'),
    },
  };
