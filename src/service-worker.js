@@ -10,7 +10,7 @@ precacheAndRoute(self.__WB_MANIFEST);
 registerRoute(
   /.*marcoparrone\.github\.io/,
   new StaleWhileRevalidate({
-    cacheName: 'marcoparrone',
+    cacheName: 'marcoparronegh',
   })
 );
 
