@@ -1,6 +1,7 @@
 {
     "short_name": "Tic Tac Toe",
     "name": "Tic Tac Toe",
+    "description": "A single-player board game against the CPU: there is a 3x3 grid and who can put three symbols in line wins.",
     "icons": [
 	{ "src": "t-128.png", "sizes": "128x128", "type": "image/png", "purpose": "any maskable" },
 	{ "src": "t-144.png", "sizes": "144x144", "type": "image/png", "purpose": "any maskable" },
@@ -13,6 +14,36 @@
     "lang": "en-US",
     "start_url": "https://marcoparrone.github.io/tic-tac-toe/",
     "display": "standalone",
-    "theme_color": "#ffffff",
-    "background_color": "#000000"
+    "orientation": "any",
+    "theme_color": "#000000",
+    "background_color": "#ffffff",
+    "scope": "https://marcoparrone.github.io/tic-tac-toe/",
+    "categories":  ["board", "games", "board games"],
+    "screenshots" : [
+        {
+          "src": "screenshot1.png",
+          "sizes": "1080x2220",
+          "type": "image/png"
+        },
+        {
+          "src": "screenshot2.png",
+          "sizes": "1080x2220",
+          "type": "image/png"
+        },
+        {
+          "src": "screenshot3.png",
+          "sizes": "1080x2220",
+          "type": "image/png"
+        },
+        {
+          "src": "screenshot4.png",
+          "sizes": "2220x1080",
+          "type": "image/png"
+        },
+        {
+          "src": "screenshot5.png",
+          "sizes": "2220x1080",
+          "type": "image/png"
+        }
+      ]
 }
