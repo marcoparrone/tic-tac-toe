@@ -840,7 +840,7 @@ class Board extends React.Component {
                     horizontal: 'center',
                 }}
                 open={this.state.snack_won}
-                autoHideDuration={6000}
+                autoHideDuration={2000}
                 onClose={this.close_snack_won}
                 message="You Won!"
                 action={
@@ -858,7 +858,7 @@ class Board extends React.Component {
                     horizontal: 'center',
                 }}
                 open={this.state.snack_lost}
-                autoHideDuration={6000}
+                autoHideDuration={2000}
                 onClose={this.close_snack_lost}
                 message="You Lost!"
                 action={
@@ -876,7 +876,7 @@ class Board extends React.Component {
                     horizontal: 'center',
                 }}
                 open={this.state.snack_drawn}
-                autoHideDuration={6000}
+                autoHideDuration={2000}
                 onClose={this.close_snack_drawn}
                 message="Game Drawn!"
                 action={
@@ -894,7 +894,7 @@ class Board extends React.Component {
                     horizontal: 'center',
                 }}
                 open={this.state.snack_notempty}
-                autoHideDuration={6000}
+                autoHideDuration={2000}
                 onClose={this.close_snack_notempty}
                 message="Selected cell is not empty!"
                 action={
@@ -960,7 +960,7 @@ class Board extends React.Component {
                 <DialogTitle id="form-dialog-title">About</DialogTitle>
                 <DialogContent>
                   <DialogContentText>
-                    <p>Copyright &copy; 2019,2020 Marco Parrone.</p>
+                    <p>Copyright &copy; 2000,2002,2017,2019,2020,2021 Marco Parrone.</p>
 		    <p>Permission is hereby granted, free of charge, to any person obtaining a copy
 		      of this software and associated documentation files (the "Software"), to deal
 		      in the Software without restriction, including without limitation the rights
