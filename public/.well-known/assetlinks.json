@@ -1,0 +1,5 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.marcoparrone.twa.tictactoe",
+                   "sha256_cert_fingerprints": ["B3:C9:16:93:0D:42:8E:72:8F:86:FD:2F:30:81:F7:BC:C5:8C:39:C9:BC:D8:7E:02:A5:DF:A4:D7:03:7F:D7:E2"] }
+}]
