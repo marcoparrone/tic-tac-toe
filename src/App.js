@@ -187,20 +187,34 @@ class Board extends React.Component {
         let level = localStorage.getItem('level');
 
         if (board) {
-            this.board = JSON.parse(board);
-            if (level) { this.level = level; }
-            this.setState({
-                board: this.board,
-                level: this.level,
-                snack_won: this.snack_won,
-                snack_lost: this.snack_lost,
-                snack_drawn: this.snack_drawn,
-                snack_notempty: this.snack_notempty,
-                dialog_info: this.dialog_info,
-                dialog_help: this.dialog_help,
-                dialog_settings: this.dialog_settings
-            });
+            board = JSON.parse(board);
+            if (Array.isArray(board) &&
+                (board[0] === empty || board[0] === ai || board[0] === human) &&
+                (board[1] === empty || board[1] === ai || board[1] === human) &&
+                (board[2] === empty || board[2] === ai || board[2] === human) &&
+                (board[3] === empty || board[3] === ai || board[3] === human) &&
+                (board[4] === empty || board[4] === ai || board[4] === human) &&
+                (board[5] === empty || board[5] === ai || board[5] === human) &&
+                (board[6] === empty || board[6] === ai || board[6] === human) &&
+                (board[7] === empty || board[7] === ai || board[7] === human) &&
+                (board[8] === empty || board[8] === ai || board[8] === human)) {
+                this.board = board;
+            }
         }
+        if (! isNaN(level) && level !== '' && parseInt(level) <= 9 && parseInt(level) >=1) {
+            this.level = level;
+        }
+        this.setState({
+            board: this.board,
+            level: this.level,
+            snack_won: this.snack_won,
+            snack_lost: this.snack_lost,
+            snack_drawn: this.snack_drawn,
+            snack_notempty: this.snack_notempty,
+            dialog_info: this.dialog_info,
+            dialog_help: this.dialog_help,
+            dialog_settings: this.dialog_settings
+        });
     }
 
     saveBoard () {
@@ -509,6 +523,7 @@ class Board extends React.Component {
             this.saveBoard();
 	    break;
 	default:
+            this.saveBoard();
 	    break;
         }
     }
