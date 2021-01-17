@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import Select from '@material-ui/core/Select';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -26,6 +27,9 @@ import AutorenewIcon from '@material-ui/icons/Autorenew';
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
+import Banana from 'banana-i18n';
+
+import HtmlParse from 'html-react-parser';
 
 const empty = 0;
 const ai = 1;
@@ -35,6 +39,47 @@ const playing = 0;
 const endwin = 1;
 const endlose = 2;
 const enddraw = 3;
+
+const text_appname = 'Tic Tac Toe';
+const text_restart_label = 'restart game';
+const text_settings_label = 'settings';
+const text_help_label = 'help';
+const text_about_label = 'about';
+const text_close_label = 'close';
+const text_youwon = 'You Won!';
+const text_youlost = 'You Lost!';
+const text_drawn = 'Game Drawn!';
+const text_notempty = 'Selected cell is not empty!';
+const text_difficulty = 'Difficulty Level: ';
+const text_level = 'Level';
+const text_language = 'Choose language:';
+const text_close_button = 'Close';
+const text_settings_title = 'Settings';
+const text_help_title = 'Help';
+const text_about_title = 'About';
+const text_canvas = 'ERROR: Cannot create canvas.';
+const text_help_content = `<p>This is a tic-tac-toe game.</p>
+<p>The human player uses the X symbol, the AI player uses the O symbol. Who can put three symbols in line (horizontal, vertical or diagonal) wins.</p>
+<p>To change the difficulty level, click on the settings icon.</p>
+<p>To restart the game, click on the restart icon.</p>`;
+const text_about_content1 = `<p>Copyright © 2000,2002,2017,2019,2020,2021 Marco Parrone.
+<br />All Rights Reserved.</p>
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>`;
+const text_about_content2 = `
+<p>THIS SERVICE MAY CONTAIN TRANSLATIONS POWERED BY GOOGLE. GOOGLE DISCLAIMS ALL WARRANTIES RELATED TO THE TRANSLATIONS, EXPRESS OR IMPLIED, INCLUDING ANY WARRANTIES OF ACCURACY, RELIABILITY, AND ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.</p>
+`;
+const text_about_content3 = `
+<p>This web app has been translated for your convenience using translation software powered by Google Translate. Reasonable efforts have been made to provide an accurate translation, however, no automated translation is perfect nor is it intended to replace human translators. Translations are provided as a service to users of the marcoparrone.com website, and are provided "as is." No warranty of any kind, either expressed or implied, is made as to the accuracy, reliability, or correctness of any translations made from English into any other language. Some content (such as images, videos, Flash, etc.) may not be accurately translated due to the limitations of the translation software.</p>
+<p>The official text is the English version of the website. Any discrepancies or differences created in the translation are not binding and have no legal effect for compliance or enforcement purposes. If any questions arise related to the accuracy of the information contained in the translated website, refer to the English version of the website which is the official version.</p>
+`;
+
+const supported_languages = ['en', 'af', 'sq', 'am', 'ar', 'hy', 'az', 'eu', 'be', 'bn', 'bs', 'bg', 'ca', 'ceb', 'ny', 'zh-CN', 'zh-TW', 'co', 'hr', 'cs', 'da', 'nl', 'eo', 'et', 'tl', 'fi', 'fr', 'fy', 'gl', 'ka', 'de', 'el', 'gu', 'ht', 'ha', 'haw', 'iw', 'hi', 'hmn', 'hu', 'is', 'ig', 'id', 'ga', 'it', 'ja', 'jw', 'kn', 'kk', 'km', 'rw', 'ko', 'ku', 'ky', 'lo', 'la', 'lv', 'lt', 'lb', 'mk', 'mg', 'ms', 'ml', 'mt', 'mi', 'mr', 'mn', 'my', 'ne', 'no', 'or', 'ps', 'fa', 'pl', 'pt', 'pa', 'ro', 'ru', 'sm', 'gd', 'sr', 'st', 'sn', 'sd', 'si', 'sk', 'sl', 'so', 'es', 'su', 'sw', 'sv', 'tg', 'ta', 'tt', 'te', 'th', 'tr', 'tk', 'uk', 'ur', 'ug', 'uz', 'vi', 'cy', 'xh', 'yi', 'yo', 'zu', 'he', 'zh'];
 
 var classes;
 
@@ -135,19 +180,7 @@ class Board extends React.Component {
         
         this.board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
         this.level = 9;
-        this.state = {
-            board: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            level: 9,
-            snack_won: false,
-            snack_lost: false,
-            snack_drawn: false,
-            snack_notempty: false,
-            dialog_info: false,
-            dialog_help: false,
-            dialog_settings: false
-        };
-        this.ticTacToeRef = React.createRef();
-
+        this.language = '';
         this.snack_won = false;
         this.snack_lost = false;
         this.snack_drawn = false;
@@ -155,6 +188,65 @@ class Board extends React.Component {
         this.dialog_info = false;
         this.dialog_help = false;
         this.dialog_settings = false;
+
+        this.text_appname = text_appname;
+        this.text_restart_label = text_restart_label;
+        this.text_settings_label = text_settings_label;
+        this.text_help_label = text_help_label;
+        this.text_about_label = text_about_label;
+        this.text_close_label = text_close_label;
+        this.text_youwon = text_youwon;
+        this.text_youlost = text_youlost;
+        this.text_drawn = text_drawn;
+        this.text_notempty = text_notempty;
+        this.text_difficulty = text_difficulty;
+        this.text_level = text_level;
+        this.text_language = text_language;
+        this.text_close_button = text_close_button;
+        this.text_settings_title = text_settings_title;
+        this.text_help_title = text_help_title;
+        this.text_about_title = text_about_title;
+        this.text_canvas = text_canvas;
+        this.text_help_content = text_help_content;
+        this.text_about_content1 = text_about_content1;
+        this.text_about_content2 = text_about_content2;
+        this.text_about_content3 = text_about_content3;
+
+        this.state = {
+            board: this.board,
+            level: this.level,
+            language: this.language,
+            snack_won: this.snack_won,
+            snack_lost: this.snack_lost,
+            snack_drawn: this.snack_drawn,
+            snack_notempty: this.snack_notempty,
+            dialog_info: this.dialog_info,
+            dialog_help: this.dialog_help,
+            dialog_settings: this.dialog_settings,
+            text_appname: this.text_appname,
+            text_restart_label: this.text_restart_label,
+            text_settings_label: this.text_settings_label,
+            text_help_label: this.text_help_label,
+            text_about_label: this.text_about_label,
+            text_close_label: this.text_close_label,
+            text_youwon: this.text_youwon,
+            text_youlost: this.text_youlost,
+            text_drawn: this.text_drawn,
+            text_notempty: this.text_notempty,
+            text_difficulty: this.text_difficulty,
+            text_level: this.text_level,
+            text_language: this.text_language,
+            text_close_button: this.text_close_button,
+            text_settings_title: this.text_settings_title,
+            text_help_title: this.text_help_title,
+            text_about_title: this.text_about_title,
+            text_canvas: this.text_canvas,
+            text_help_content: this.text_help_content,
+            text_about_content1: this.text_about_content1,
+            text_about_content2: this.text_about_content2,
+            text_about_content3: this.text_about_content3
+        };
+        this.ticTacToeRef = React.createRef();
 
         this.close_snack_won = this.close_snack_won.bind(this);
         this.close_snack_lost = this.close_snack_lost.bind(this);
@@ -178,13 +270,14 @@ class Board extends React.Component {
         this.about = this.about.bind(this);
         this.help = this.help.bind(this);
         this.updateLevel = this.updateLevel.bind(this);
+        this.updateLanguage = this.updateLanguage.bind(this);
         this.settings = this.settings.bind(this);
-       
     }
 
     loadBoard () {
         let board = localStorage.getItem('board');
         let level = localStorage.getItem('level');
+        let language = localStorage.getItem('language');
 
         if (board) {
             board = JSON.parse(board);
@@ -204,16 +297,42 @@ class Board extends React.Component {
         if (! isNaN(level) && level !== '' && parseInt(level) <= 9 && parseInt(level) >=1) {
             this.level = level;
         }
+        if (supported_languages.includes(language)) {
+            this.language = language;
+        }
         this.setState({
             board: this.board,
             level: this.level,
+            language: this.language,
             snack_won: this.snack_won,
             snack_lost: this.snack_lost,
             snack_drawn: this.snack_drawn,
             snack_notempty: this.snack_notempty,
             dialog_info: this.dialog_info,
             dialog_help: this.dialog_help,
-            dialog_settings: this.dialog_settings
+            dialog_settings: this.dialog_settings,
+            text_appname: this.text_appname,
+            text_restart_label: this.text_restart_label,
+            text_settings_label: this.text_settings_label,
+            text_help_label: this.text_help_label,
+            text_about_label: this.text_about_label,
+            text_close_label: this.text_close_label,
+            text_youwon: this.text_youwon,
+            text_youlost: this.text_youlost,
+            text_drawn: this.text_drawn,
+            text_notempty: this.text_notempty,
+            text_difficulty: this.text_difficulty,
+            text_level: this.text_level,
+            text_language: this.text_language,
+            text_close_button: this.text_close_button,
+            text_settings_title: this.text_settings_title,
+            text_help_title: this.text_help_title,
+            text_about_title: this.text_about_title,
+            text_canvas: this.text_canvas,
+            text_help_content: this.text_help_content,
+            text_about_content1: this.text_about_content1,
+            text_about_content2: this.text_about_content2,
+            text_about_content3: this.text_about_content3
         });
     }
 
@@ -221,16 +340,40 @@ class Board extends React.Component {
         this.setState({
             board: this.board,
             level: this.level,
+            language: this.language,
             snack_won: this.snack_won,
             snack_lost: this.snack_lost,
             snack_drawn: this.snack_drawn,
             snack_notempty: this.snack_notempty,
             dialog_info: this.dialog_info,
             dialog_help: this.dialog_help,
-            dialog_settings: this.dialog_settings
+            dialog_settings: this.dialog_settings,
+            text_appname: this.text_appname,
+            text_restart_label: this.text_restart_label,
+            text_settings_label: this.text_settings_label,
+            text_help_label: this.text_help_label,
+            text_about_label: this.text_about_label,
+            text_close_label: this.text_close_label,
+            text_youwon: this.text_youwon,
+            text_youlost: this.text_youlost,
+            text_drawn: this.text_drawn,
+            text_notempty: this.text_notempty,
+            text_difficulty: this.text_difficulty,
+            text_level: this.text_level,
+            text_language: this.text_language,
+            text_close_button: this.text_close_button,
+            text_settings_title: this.text_settings_title,
+            text_help_title: this.text_help_title,
+            text_about_title: this.text_about_title,
+            text_canvas: this.text_canvas,
+            text_help_content: this.text_help_content,
+            text_about_content1: this.text_about_content1,
+            text_about_content2: this.text_about_content2,
+            text_about_content3: this.text_about_content3
         });
         localStorage.setItem('board', JSON.stringify(this.board));
         localStorage.setItem('level', this.level);
+        localStorage.setItem('language', this.language);
     }
 
     resetgame() {
@@ -256,6 +399,14 @@ class Board extends React.Component {
             this.level = sliderval;
         }
         this.saveBoard();
+    }
+
+    updateLanguage (event) {
+        if (event.target.value) {
+            this.language = event.target.value;
+        }
+        this.saveBoard();
+        this.i18n_init();
     }
 
     settings() {
@@ -815,8 +966,97 @@ class Board extends React.Component {
         this.draw();
     }
 
+    i18n_init () {
+        let banana = new Banana();
+
+        if (this.language === '') {
+            this.language = navigator.languages.find(lang => {return supported_languages.includes(lang)});
+            if (! this.language) {
+                this.language = 'en';
+            }
+        }
+
+        banana.setLocale(this.language);
+        fetch('i18n/' + banana.locale + '.json')
+          .then((response) => {
+              if (!response.ok) {
+                  throw new Error ('Network response was not ok');
+              } else {
+                return response.json();
+              }
+          })
+          .then((messages) => {
+            banana.load(messages, banana.locale);
+            this.text_appname = banana.i18n('text_appname');
+            this.text_restart_label = banana.i18n('text_restart_label');
+            this.text_settings_label = banana.i18n('text_settings_label');
+            this.text_help_label = banana.i18n('text_help_label');
+            this.text_about_label = banana.i18n('text_about_label');
+            this.text_close_label = banana.i18n('text_close_label');
+            this.text_youwon = banana.i18n('text_youwon');
+            this.text_youlost = banana.i18n('text_youlost');
+            this.text_drawn = banana.i18n('text_drawn');
+            this.text_notempty = banana.i18n('text_notempty');
+            this.text_difficulty = banana.i18n('text_difficulty');
+            this.text_level = banana.i18n('text_level');
+            this.text_language = banana.i18n('text_language');
+            this.text_close_button = banana.i18n('text_close_button');
+            this.text_settings_title = banana.i18n('text_settings_title');
+            this.text_help_title = banana.i18n('text_help_title');
+            this.text_about_title = banana.i18n('text_about_title');
+            this.text_canvas = banana.i18n('text_canvas');
+            this.text_help_content = banana.i18n('text_help_content');
+            this.text_about_content1 = banana.i18n('text_about_content1');
+            this.text_about_content2 = banana.i18n('text_about_content2');
+            this.text_about_content3 = banana.i18n('text_about_content3');
+            this.setState({
+                board: this.board,
+                level: this.level,
+                language: this.language,
+                snack_won: this.snack_won,
+                snack_lost: this.snack_lost,
+                snack_drawn: this.snack_drawn,
+                snack_notempty: this.snack_notempty,
+                dialog_info: this.dialog_info,
+                dialog_help: this.dialog_help,
+                dialog_settings: this.dialog_settings,
+                text_appname: this.text_appname,
+                text_restart_label: this.text_restart_label,
+                text_settings_label: this.text_settings_label,
+                text_help_label: this.text_help_label,
+                text_about_label: this.text_about_label,
+                text_close_label: this.text_close_label,
+                text_youwon: this.text_youwon,
+                text_youlost: this.text_youlost,
+                text_drawn: this.text_drawn,
+                text_notempty: this.text_notempty,
+                text_difficulty: this.text_difficulty,
+                text_level: this.text_level,
+                text_language: this.text_language,
+                text_close_button: this.text_close_button,
+                text_settings_title: this.text_settings_title,
+                text_help_title: this.text_help_title,
+                text_about_title: this.text_about_title,
+                text_canvas: this.text_canvas,
+                text_help_content: this.text_help_content,
+                text_about_content1: this.text_about_content1,
+                text_about_content2: this.text_about_content2,
+                text_about_content3: this.text_about_content3
+            });
+            })
+          .catch(error => {
+            console.error('Cannot fetch i18n/' + banana.locale + '.json: ', error);
+          });
+    }
+
     componentDidMount() {
+        // Load the localStorage data.
         this.loadBoard();
+
+        // Localize the User Interface.
+        this.i18n_init();
+
+        // Init canvas and input handler code.
         this.webapp_init();
     }
 
@@ -829,25 +1069,25 @@ class Board extends React.Component {
                 <AppBar position="static" className={classes.root}>
                   <Toolbar>
                     <Typography variant="h6" className={classes.title}>
-                      Tic Tac Toe
+                      {this.state.text_appname}
                     </Typography>
-                    <IconButton color="inherit" aria-label="restart game" onClick={this.resetgame}>
+                    <IconButton color="inherit" aria-label={this.state.text_restart_label} onClick={this.resetgame}>
                       <AutorenewIcon />
                     </IconButton>
-                    <IconButton color="inherit" aria-label="settings" onClick={this.settings}>
+                    <IconButton color="inherit" aria-label={this.state.text_settings_label} onClick={this.settings}>
                       <SettingsIcon />
                     </IconButton>
-                    <IconButton color="inherit" aria-label="help" onClick={this.help}>
+                    <IconButton color="inherit" aria-label={this.state.text_help_label} onClick={this.help}>
                       <HelpIcon />
                     </IconButton>
-                    <IconButton color="inherit" aria-label="about" onClick={this.about}>
+                    <IconButton color="inherit" aria-label={this.state.text_about_label} onClick={this.about}>
                       <InfoIcon />
                     </IconButton>
                   </Toolbar>
                 </AppBar>
               </div>
               
-              <canvas className="webapp" id="canvas" tabIndex={0}>ERROR: Cannot create canvas.</canvas>
+              <canvas className="webapp" id="canvas" tabIndex={0}>{this.state.text_canvas}</canvas>
 
               <Snackbar
                 anchorOrigin={{
@@ -857,10 +1097,10 @@ class Board extends React.Component {
                 open={this.state.snack_won}
                 autoHideDuration={2000}
                 onClose={this.close_snack_won}
-                message="You Won!"
+                message={this.state.text_youwon}
                 action={
                     <React.Fragment>
-                      <IconButton size="small" aria-label="close" color="inherit" onClick={this.close_snack_won}>
+                      <IconButton size="small" aria-label={this.state.text_close_label} color="inherit" onClick={this.close_snack_won}>
                         <CloseIcon fontSize="small" />
                       </IconButton>
                     </React.Fragment>
@@ -875,10 +1115,10 @@ class Board extends React.Component {
                 open={this.state.snack_lost}
                 autoHideDuration={2000}
                 onClose={this.close_snack_lost}
-                message="You Lost!"
+                message={this.state.text_youlost}
                 action={
                     <React.Fragment>
-                      <IconButton size="small" aria-label="close" color="inherit" onClick={this.close_snack_lost}>
+                      <IconButton size="small" aria-label={this.state.text_close_label} color="inherit" onClick={this.close_snack_lost}>
                         <CloseIcon fontSize="small" />
                       </IconButton>
                     </React.Fragment>
@@ -893,10 +1133,10 @@ class Board extends React.Component {
                 open={this.state.snack_drawn}
                 autoHideDuration={2000}
                 onClose={this.close_snack_drawn}
-                message="Game Drawn!"
+                message={this.state.text_drawn}
                 action={
                     <React.Fragment>
-                      <IconButton size="small" aria-label="close" color="inherit" onClick={this.close_snack_drawn}>
+                      <IconButton size="small" aria-label={this.state.text_close_label} color="inherit" onClick={this.close_snack_drawn}>
                         <CloseIcon fontSize="small" />
                       </IconButton>
                     </React.Fragment>
@@ -911,10 +1151,10 @@ class Board extends React.Component {
                 open={this.state.snack_notempty}
                 autoHideDuration={2000}
                 onClose={this.close_snack_notempty}
-                message="Selected cell is not empty!"
+                message={this.state.text_notempty}
                 action={
                     <React.Fragment>
-                      <IconButton size="small" aria-label="close" color="inherit" onClick={this.close_snack_notempty}>
+                      <IconButton size="small" aria-label={this.state.text_close_label} color="inherit" onClick={this.close_snack_notempty}>
                         <CloseIcon fontSize="small" />
                       </IconButton>
                     </React.Fragment>
@@ -922,14 +1162,14 @@ class Board extends React.Component {
               />
 
               <Dialog open={this.state.dialog_settings} onClose={this.close_dialog_settings} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Settings</DialogTitle>
+                <DialogTitle id="form-dialog-title">{this.state.text_settings_title}</DialogTitle>
                 <DialogContent>
                   <DialogContentText>
-                    <p>Difficulty level: {this.state.level}</p>
+                    <p>{this.state.text_difficulty}{this.state.level}</p>
                   </DialogContentText>
                   <div className={classes.reverse}>
                     <Typography id="discrete-slider" gutterBottom>
-                      Level
+                      {this.state.text_level}
                     </Typography>
                     <ThemeProvider theme={theme}>
                       <Slider
@@ -945,50 +1185,168 @@ class Board extends React.Component {
                       />
                     </ThemeProvider>
                   </div>
+                  <div className={classes.reverse}>
+                  <ThemeProvider theme={theme}>
+                  <p>{this.state.text_language}
+                  <Select
+                    native
+                    value={this.state.language}
+                    onChange={this.updateLanguage}
+                    inputProps={{
+                        name: 'language',
+                        id: 'language-select',
+                    }}
+                    >
+                    <option value="af">Afrikaans</option>
+                    <option value="sq">Albanian</option>
+                    <option value="am">Amharic</option>
+                    <option value="ar">Arabic</option>
+                    <option value="hy">Armenian</option>
+                    <option value="az">Azerbaijani</option>
+                    <option value="eu">Basque</option>
+                    <option value="be">Belarusian</option>
+                    <option value="bn">Bengali</option>
+                    <option value="bs">Bosnian</option>
+                    <option value="bg">Bulgarian</option>
+                    <option value="ca">Catalan</option>
+                    <option value="ceb">Cebuano</option>
+                    <option value="ny">Chichewa</option>
+                    <option value="zh-CN">Chinese</option>
+                    <option value="zh-TW">Chinese</option>
+                    <option value="co">Corsican</option>
+                    <option value="hr">Croatian</option>
+                    <option value="cs">Czech</option>
+                    <option value="da">Danish</option>
+                    <option value="nl">Dutch</option>
+                    <option value="en">English</option>
+                    <option value="eo">Esperanto</option>
+                    <option value="et">Estonian</option>
+                    <option value="tl">Filipino</option>
+                    <option value="fi">Finnish</option>
+                    <option value="fr">French</option>
+                    <option value="fy">Frisian</option>
+                    <option value="gl">Galician</option>
+                    <option value="ka">Georgian</option>
+                    <option value="de">German</option>
+                    <option value="el">Greek</option>
+                    <option value="gu">Gujarati</option>
+                    <option value="ht">Haitian</option>
+                    <option value="ha">Hausa</option>
+                    <option value="haw">Hawaiian</option>
+                    <option value="iw">Hebrew</option>
+                    <option value="hi">Hindi</option>
+                    <option value="hmn">Hmong</option>
+                    <option value="hu">Hungarian</option>
+                    <option value="is">Icelandic</option>
+                    <option value="ig">Igbo</option>
+                    <option value="id">Indonesian</option>
+                    <option value="ga">Irish</option>
+                    <option value="it">Italian</option>
+                    <option value="ja">Japanese</option>
+                    <option value="jw">Javanese</option>
+                    <option value="kn">Kannada</option>
+                    <option value="kk">Kazakh</option>
+                    <option value="km">Khmer</option>
+                    <option value="rw">Kinyarwanda</option>
+                    <option value="ko">Korean</option>
+                    <option value="ku">Kurdish</option>
+                    <option value="ky">Kyrgyz</option>
+                    <option value="lo">Lao</option>
+                    <option value="la">Latin</option>
+                    <option value="lv">Latvian</option>
+                    <option value="lt">Lithuanian</option>
+                    <option value="lb">Luxembourgish</option>
+                    <option value="mk">Macedonian</option>
+                    <option value="mg">Malagasy</option>
+                    <option value="ms">Malay</option>
+                    <option value="ml">Malayalam</option>
+                    <option value="mt">Maltese</option>
+                    <option value="mi">Maori</option>
+                    <option value="mr">Marathi</option>
+                    <option value="mn">Mongolian</option>
+                    <option value="my">Myanmar</option>
+                    <option value="ne">Nepali</option>
+                    <option value="no">Norwegian</option>
+                    <option value="or">Odia</option>
+                    <option value="ps">Pashto</option>
+                    <option value="fa">Persian</option>
+                    <option value="pl">Polish</option>
+                    <option value="pt">Portuguese</option>
+                    <option value="pa">Punjabi</option>
+                    <option value="ro">Romanian</option>
+                    <option value="ru">Russian</option>
+                    <option value="sm">Samoan</option>
+                    <option value="gd">Scots</option>
+                    <option value="sr">Serbian</option>
+                    <option value="st">Sesotho</option>
+                    <option value="sn">Shona</option>
+                    <option value="sd">Sindhi</option>
+                    <option value="si">Sinhala</option>
+                    <option value="sk">Slovak</option>
+                    <option value="sl">Slovenian</option>
+                    <option value="so">Somali</option>
+                    <option value="es">Spanish</option>
+                    <option value="su">Sundanese</option>
+                    <option value="sw">Swahili</option>
+                    <option value="sv">Swedish</option>
+                    <option value="tg">Tajik</option>
+                    <option value="ta">Tamil</option>
+                    <option value="tt">Tatar</option>
+                    <option value="te">Telugu</option>
+                    <option value="th">Thai</option>
+                    <option value="tr">Turkish</option>
+                    <option value="tk">Turkmen</option>
+                    <option value="uk">Ukrainian</option>
+                    <option value="ur">Urdu</option>
+                    <option value="ug">Uyghur</option>
+                    <option value="uz">Uzbek</option>
+                    <option value="vi">Vietnamese</option>
+                    <option value="cy">Welsh</option>
+                    <option value="xh">Xhosa</option>
+                    <option value="yi">Yiddish</option>
+                    <option value="yo">Yoruba</option>
+                    <option value="zu">Zulu</option>
+                    <option value="he">Hebrew</option>
+                    <option value="zh">Chinese</option>
+                   </Select>
+				</p>
+                  </ThemeProvider>
+                  </div>
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={this.close_dialog_settings} color="inherit">
-                    Close
+                    {this.state.text_close_button}
                   </Button>
                 </DialogActions>
               </Dialog>
 
               
               <Dialog open={this.state.dialog_help} onClose={this.close_dialog_help} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Help</DialogTitle>
+                <DialogTitle id="form-dialog-title">{this.state.text_help_title}</DialogTitle>
                 <DialogContent>
                   <DialogContentText>
-                    <p>This is a tic-tac-toe game.</p>
-                    <p>The human player uses the X symbol, the AI player uses the O symbol. Who can put three symbols in line (horizontal, vertical or diagonal) wins.</p>
-                    <p>To change the difficulty level, click on the settings icon.</p>
-                    <p>To restart the game, click on the restart icon.</p>
+                      {HtmlParse(this.state.text_help_content)}
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={this.close_dialog_help} color="inherit">
-                    Close
+                    {this.state.text_close_button}
                   </Button>
                 </DialogActions>
               </Dialog>
 
               <Dialog open={this.state.dialog_info} onClose={this.close_dialog_info} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">About</DialogTitle>
+                <DialogTitle id="form-dialog-title">{this.state.text_about_title}</DialogTitle>
                 <DialogContent>
                   <DialogContentText>
-                    <p>Copyright &copy; 2000,2002,2017,2019,2020,2021 Marco Parrone.</p>
-		            <p>All Rights Reserved.</p>
-                    <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-                      SOFTWARE.</p>
+                    {HtmlParse(this.state.text_about_content1)}
+                    {HtmlParse(this.state.text_about_content2)}
+                    {HtmlParse(this.state.text_about_content3)}
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={this.close_dialog_info} color="inherit">
-                    Close
+                    {this.state.text_close_button}
                   </Button>
                 </DialogActions>
               </Dialog>
