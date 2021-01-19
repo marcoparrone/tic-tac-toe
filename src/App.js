@@ -969,7 +969,7 @@ class Board extends React.Component {
     i18n_init () {
         let banana = new Banana();
 
-        if (this.language === '') {
+        if (this.language === '' && navigator && navigator.languages) {
             this.language = navigator.languages.find(lang => {return supported_languages.includes(lang)});
             if (! this.language) {
                 this.language = 'en';
@@ -1211,8 +1211,9 @@ class Board extends React.Component {
                     <option value="ca">Catalan</option>
                     <option value="ceb">Cebuano</option>
                     <option value="ny">Chichewa</option>
-                    <option value="zh-CN">Chinese</option>
-                    <option value="zh-TW">Chinese</option>
+                    <option value="zh-CN">Chinese (Simplified)</option>
+                    <option value="zh-TW">Chinese (Traditional)</option>
+                    <option value="zh">Chinese (Simplified)</option>
                     <option value="co">Corsican</option>
                     <option value="hr">Croatian</option>
                     <option value="cs">Czech</option>
@@ -1230,10 +1231,11 @@ class Board extends React.Component {
                     <option value="de">German</option>
                     <option value="el">Greek</option>
                     <option value="gu">Gujarati</option>
-                    <option value="ht">Haitian</option>
+                    <option value="ht">Haitian Creole</option>
                     <option value="ha">Hausa</option>
                     <option value="haw">Hawaiian</option>
                     <option value="iw">Hebrew</option>
+                    <option value="he">Hebrew</option>
                     <option value="hi">Hindi</option>
                     <option value="hmn">Hmong</option>
                     <option value="hu">Hungarian</option>
@@ -1249,7 +1251,7 @@ class Board extends React.Component {
                     <option value="km">Khmer</option>
                     <option value="rw">Kinyarwanda</option>
                     <option value="ko">Korean</option>
-                    <option value="ku">Kurdish</option>
+                    <option value="ku">Kurdish (Kurmanji)</option>
                     <option value="ky">Kyrgyz</option>
                     <option value="lo">Lao</option>
                     <option value="la">Latin</option>
@@ -1264,10 +1266,10 @@ class Board extends React.Component {
                     <option value="mi">Maori</option>
                     <option value="mr">Marathi</option>
                     <option value="mn">Mongolian</option>
-                    <option value="my">Myanmar</option>
+                    <option value="my">Myanmar (Burmese)</option>
                     <option value="ne">Nepali</option>
                     <option value="no">Norwegian</option>
-                    <option value="or">Odia</option>
+                    <option value="or">Odia (Oriya)</option>
                     <option value="ps">Pashto</option>
                     <option value="fa">Persian</option>
                     <option value="pl">Polish</option>
@@ -1276,7 +1278,7 @@ class Board extends React.Component {
                     <option value="ro">Romanian</option>
                     <option value="ru">Russian</option>
                     <option value="sm">Samoan</option>
-                    <option value="gd">Scots</option>
+                    <option value="gd">Scots Gaelic</option>
                     <option value="sr">Serbian</option>
                     <option value="st">Sesotho</option>
                     <option value="sn">Shona</option>
@@ -1306,8 +1308,6 @@ class Board extends React.Component {
                     <option value="yi">Yiddish</option>
                     <option value="yo">Yoruba</option>
                     <option value="zu">Zulu</option>
-                    <option value="he">Hebrew</option>
-                    <option value="zh">Chinese</option>
                    </Select>
 				</p>
                   </ThemeProvider>
