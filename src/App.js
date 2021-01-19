@@ -60,7 +60,7 @@ const text_about_title = 'About';
 const text_canvas = 'ERROR: Cannot create canvas.';
 const text_help_content = `<p>This is a tic-tac-toe game.</p>
 <p>The human player uses the X symbol, the AI player uses the O symbol. Who can put three symbols in line (horizontal, vertical or diagonal) wins.</p>
-<p>To change the difficulty level, click on the settings icon.</p>
+<p>To change the difficulty level, click on the settings icon. There you can change the language of the user interface too.</p>
 <p>To restart the game, click on the restart icon.</p>`;
 const text_about_content1 = `<p>Copyright © 2000,2002,2017,2019,2020,2021 Marco Parrone.
 <br />All Rights Reserved.</p>
