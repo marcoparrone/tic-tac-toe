@@ -234,6 +234,7 @@ class Board extends React.Component {
         this.updateLevel = this.updateLevel.bind(this);
         this.updateLanguage = this.updateLanguage.bind(this);
         this.settings = this.settings.bind(this);
+        this.i18n_init = this.i18n_init.bind(this);
     }
 
     saveState () {
@@ -345,7 +346,6 @@ class Board extends React.Component {
         if (event.target.value) {
             this.language = event.target.value;
         }
-        this.saveBoard();
         this.i18n_init();
     }
 
@@ -918,6 +918,7 @@ class Board extends React.Component {
           .then((messages) => {
             this.text = messages;
             this.saveState();
+            localStorage.setItem('language', this.language);
             })
           .catch(error => {
             console.error('Cannot fetch i18n/' + this.language + '.json: ', error);
