@@ -27,8 +27,6 @@ import AutorenewIcon from '@material-ui/icons/Autorenew';
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-import Banana from 'banana-i18n';
-
 import HtmlParse from 'html-react-parser';
 
 const empty = 0;
@@ -39,45 +37,6 @@ const playing = 0;
 const endwin = 1;
 const endlose = 2;
 const enddraw = 3;
-
-const text_appname = 'Tic Tac Toe';
-const text_restart_label = 'restart game';
-const text_settings_label = 'settings';
-const text_help_label = 'help';
-const text_about_label = 'about';
-const text_close_label = 'close';
-const text_youwon = 'You Won!';
-const text_youlost = 'You Lost!';
-const text_drawn = 'Game Drawn!';
-const text_notempty = 'Selected cell is not empty!';
-const text_difficulty = 'Difficulty Level: ';
-const text_level = 'Level';
-const text_language = 'Choose language:';
-const text_close_button = 'Close';
-const text_settings_title = 'Settings';
-const text_help_title = 'Help';
-const text_about_title = 'About';
-const text_canvas = 'ERROR: Cannot create canvas.';
-const text_help_content = `<p>This is a tic-tac-toe game.</p>
-<p>The human player uses the X symbol, the AI player uses the O symbol. Who can put three symbols in line (horizontal, vertical or diagonal) wins.</p>
-<p>To change the difficulty level, click on the settings icon. There you can change the language of the user interface too.</p>
-<p>To restart the game, click on the restart icon.</p>`;
-const text_about_content1 = `<p>Copyright © 2000,2002,2017,2019,2020,2021 Marco Parrone.
-<br />All Rights Reserved.</p>
-<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.</p>`;
-const text_about_content2 = `
-<p>THIS SERVICE MAY CONTAIN TRANSLATIONS POWERED BY GOOGLE. GOOGLE DISCLAIMS ALL WARRANTIES RELATED TO THE TRANSLATIONS, EXPRESS OR IMPLIED, INCLUDING ANY WARRANTIES OF ACCURACY, RELIABILITY, AND ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.</p>
-`;
-const text_about_content3 = `
-<p>This web app has been translated for your convenience using translation software powered by Google Translate. Reasonable efforts have been made to provide an accurate translation, however, no automated translation is perfect nor is it intended to replace human translators. Translations are provided as a service to users of the marcoparrone.com website, and are provided "as is." No warranty of any kind, either expressed or implied, is made as to the accuracy, reliability, or correctness of any translations made from English into any other language. Some content (such as images, videos, Flash, etc.) may not be accurately translated due to the limitations of the translation software.</p>
-<p>The official text is the English version of the website. Any discrepancies or differences created in the translation are not binding and have no legal effect for compliance or enforcement purposes. If any questions arise related to the accuracy of the information contained in the translated website, refer to the English version of the website which is the official version.</p>
-`;
 
 const supported_languages = ['en', 'af', 'sq', 'am', 'ar', 'hy', 'az', 'eu', 'be', 'bn', 'bs', 'bg', 'ca', 'ceb', 'ny', 'zh-CN', 'zh-TW', 'co', 'hr', 'cs', 'da', 'nl', 'eo', 'et', 'tl', 'fi', 'fr', 'fy', 'gl', 'ka', 'de', 'el', 'gu', 'ht', 'ha', 'haw', 'iw', 'hi', 'hmn', 'hu', 'is', 'ig', 'id', 'ga', 'it', 'ja', 'jw', 'kn', 'kk', 'km', 'rw', 'ko', 'ku', 'ky', 'lo', 'la', 'lv', 'lt', 'lb', 'mk', 'mg', 'ms', 'ml', 'mt', 'mi', 'mr', 'mn', 'my', 'ne', 'no', 'or', 'ps', 'fa', 'pl', 'pt', 'pa', 'ro', 'ru', 'sm', 'gd', 'sr', 'st', 'sn', 'sd', 'si', 'sk', 'sl', 'so', 'es', 'su', 'sw', 'sv', 'tg', 'ta', 'tt', 'te', 'th', 'tr', 'tk', 'uk', 'ur', 'ug', 'uz', 'vi', 'cy', 'xh', 'yi', 'yo', 'zu', 'he', 'zh'];
 
@@ -180,7 +139,7 @@ class Board extends React.Component {
         
         this.board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
         this.level = 9;
-        this.language = '';
+        this.language = 'en';
         this.snack_won = false;
         this.snack_lost = false;
         this.snack_drawn = false;
@@ -189,28 +148,30 @@ class Board extends React.Component {
         this.dialog_help = false;
         this.dialog_settings = false;
 
-        this.text_appname = text_appname;
-        this.text_restart_label = text_restart_label;
-        this.text_settings_label = text_settings_label;
-        this.text_help_label = text_help_label;
-        this.text_about_label = text_about_label;
-        this.text_close_label = text_close_label;
-        this.text_youwon = text_youwon;
-        this.text_youlost = text_youlost;
-        this.text_drawn = text_drawn;
-        this.text_notempty = text_notempty;
-        this.text_difficulty = text_difficulty;
-        this.text_level = text_level;
-        this.text_language = text_language;
-        this.text_close_button = text_close_button;
-        this.text_settings_title = text_settings_title;
-        this.text_help_title = text_help_title;
-        this.text_about_title = text_about_title;
-        this.text_canvas = text_canvas;
-        this.text_help_content = text_help_content;
-        this.text_about_content1 = text_about_content1;
-        this.text_about_content2 = text_about_content2;
-        this.text_about_content3 = text_about_content3;
+        this.text = {
+            "text_appname": "Tic Tac Toe",
+            "text_restart_label": "restart game",
+            "text_settings_label": "settings",
+            "text_help_label": "help",
+            "text_about_label": "about",
+            "text_close_label": "close",
+            "text_youwon": "You Won!",
+            "text_youlost": "You Lost!",
+            "text_drawn": "The game was drawn!",
+            "text_notempty": "Selected cell is not empty!",
+            "text_difficulty": "Difficulty Level: ",
+            "text_level": "Level",
+            "text_language": "Choose language:",
+            "text_close_button": "Close",
+            "text_settings_title": "Settings",
+            "text_help_title": "Help",
+            "text_about_title": "About",
+            "text_canvas": "ERROR: Cannot create canvas.",
+            "text_help_content": "<p>This is a tic-tac-toe game.</p><p>The human player uses the X symbol, the AI player uses the O symbol. Who can put three symbols in line (horizontal, vertical or diagonal) wins.</p><p>To change the difficulty level, click on the settings icon. There you can change the language of the user interface too.</p><p>To restart the game, click on the restart icon.</p>",
+            "text_about_content1": "<p>Copyright © 2000,2002,2017,2019,2020,2021 Marco Parrone.<br />All Rights Reserved.</p><p>THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>",
+            "text_about_content2": "<p>THIS SERVICE MAY CONTAIN TRANSLATIONS POWERED BY GOOGLE. GOOGLE DISCLAIMS ALL WARRANTIES RELATED TO THE TRANSLATIONS, EXPRESS OR IMPLIED, INCLUDING ANY WARRANTIES OF ACCURACY, RELIABILITY, AND ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.</p>",
+            "text_about_content3": "<p>This web app has been translated for your convenience using translation software powered by Google Translate. Reasonable efforts have been made to provide an accurate translation, however, no automated translation is perfect nor is it intended to replace human translators. Translations are provided as a service to users of the marcoparrone.com website, and are provided \"as is.\" No warranty of any kind, either expressed or implied, is made as to the accuracy, reliability, or correctness of any translations made from English into any other language. Some content (such as images, videos, Flash, etc.) may not be accurately translated due to the limitations of the translation software.</p><p>The official text is the English version of the website. Any discrepancies or differences created in the translation are not binding and have no legal effect for compliance or enforcement purposes. If any questions arise related to the accuracy of the information contained in the translated website, refer to the English version of the website which is the official version.</p>"
+        };
 
         this.state = {
             board: this.board,
@@ -223,28 +184,28 @@ class Board extends React.Component {
             dialog_info: this.dialog_info,
             dialog_help: this.dialog_help,
             dialog_settings: this.dialog_settings,
-            text_appname: this.text_appname,
-            text_restart_label: this.text_restart_label,
-            text_settings_label: this.text_settings_label,
-            text_help_label: this.text_help_label,
-            text_about_label: this.text_about_label,
-            text_close_label: this.text_close_label,
-            text_youwon: this.text_youwon,
-            text_youlost: this.text_youlost,
-            text_drawn: this.text_drawn,
-            text_notempty: this.text_notempty,
-            text_difficulty: this.text_difficulty,
-            text_level: this.text_level,
-            text_language: this.text_language,
-            text_close_button: this.text_close_button,
-            text_settings_title: this.text_settings_title,
-            text_help_title: this.text_help_title,
-            text_about_title: this.text_about_title,
-            text_canvas: this.text_canvas,
-            text_help_content: this.text_help_content,
-            text_about_content1: this.text_about_content1,
-            text_about_content2: this.text_about_content2,
-            text_about_content3: this.text_about_content3
+            text_appname: this.text['text_appname'],
+            text_restart_label: this.text['text_restart_label'],
+            text_settings_label: this.text['text_settings_label'],
+            text_help_label: this.text['text_help_label'],
+            text_about_label: this.text['text_about_label'],
+            text_close_label: this.text['text_close_label'],
+            text_youwon: this.text['text_youwon'],
+            text_youlost: this.text['text_youlost'],
+            text_drawn: this.text['text_drawn'],
+            text_notempty: this.text['text_notempty'],
+            text_difficulty: this.text['text_difficulty'],
+            text_level: this.text['text_level'],
+            text_language: this.text['text_language'],
+            text_close_button: this.text['text_close_button'],
+            text_settings_title: this.text['text_settings_title'],
+            text_help_title: this.text['text_help_title'],
+            text_about_title: this.text['text_about_title'],
+            text_canvas: this.text['text_canvas'],
+            text_help_content: this.text['text_help_content'],
+            text_about_content1: this.text['text_about_content1'],
+            text_about_content2: this.text['text_about_content2'],
+            text_about_content3: this.text['text_about_content3']
         };
         this.ticTacToeRef = React.createRef();
 
@@ -256,6 +217,7 @@ class Board extends React.Component {
         this.close_dialog_help = this.close_dialog_help.bind(this);
         this.close_dialog_settings = this.close_dialog_settings.bind(this);
 
+        this.saveState = this.saveState.bind(this);
         this.loadBoard = this.loadBoard.bind(this);
         this.saveBoard = this.saveBoard.bind(this);
 
@@ -272,6 +234,43 @@ class Board extends React.Component {
         this.updateLevel = this.updateLevel.bind(this);
         this.updateLanguage = this.updateLanguage.bind(this);
         this.settings = this.settings.bind(this);
+    }
+
+    saveState () {
+        this.setState({
+            board: this.board,
+            level: this.level,
+            language: this.language,
+            snack_won: this.snack_won,
+            snack_lost: this.snack_lost,
+            snack_drawn: this.snack_drawn,
+            snack_notempty: this.snack_notempty,
+            dialog_info: this.dialog_info,
+            dialog_help: this.dialog_help,
+            dialog_settings: this.dialog_settings,
+            text_appname: this.text['text_appname'],
+            text_restart_label: this.text['text_restart_label'],
+            text_settings_label: this.text['text_settings_label'],
+            text_help_label: this.text['text_help_label'],
+            text_about_label: this.text['text_about_label'],
+            text_close_label: this.text['text_close_label'],
+            text_youwon: this.text['text_youwon'],
+            text_youlost: this.text['text_youlost'],
+            text_drawn: this.text['text_drawn'],
+            text_notempty: this.text['text_notempty'],
+            text_difficulty: this.text['text_difficulty'],
+            text_level: this.text['text_level'],
+            text_language: this.text['text_language'],
+            text_close_button: this.text['text_close_button'],
+            text_settings_title: this.text['text_settings_title'],
+            text_help_title: this.text['text_help_title'],
+            text_about_title: this.text['text_about_title'],
+            text_canvas: this.text['text_canvas'],
+            text_help_content: this.text['text_help_content'],
+            text_about_content1: this.text['text_about_content1'],
+            text_about_content2: this.text['text_about_content2'],
+            text_about_content3: this.text['text_about_content3']
+        });
     }
 
     loadBoard () {
@@ -299,78 +298,19 @@ class Board extends React.Component {
         }
         if (supported_languages.includes(language)) {
             this.language = language;
+        } else {
+            if (navigator && navigator.languages) {
+                this.language = navigator.languages.find(lang => {return supported_languages.includes(lang)});
+                if (! this.language) {
+                    this.language = 'en';
+                }
+            }
         }
-        this.setState({
-            board: this.board,
-            level: this.level,
-            language: this.language,
-            snack_won: this.snack_won,
-            snack_lost: this.snack_lost,
-            snack_drawn: this.snack_drawn,
-            snack_notempty: this.snack_notempty,
-            dialog_info: this.dialog_info,
-            dialog_help: this.dialog_help,
-            dialog_settings: this.dialog_settings,
-            text_appname: this.text_appname,
-            text_restart_label: this.text_restart_label,
-            text_settings_label: this.text_settings_label,
-            text_help_label: this.text_help_label,
-            text_about_label: this.text_about_label,
-            text_close_label: this.text_close_label,
-            text_youwon: this.text_youwon,
-            text_youlost: this.text_youlost,
-            text_drawn: this.text_drawn,
-            text_notempty: this.text_notempty,
-            text_difficulty: this.text_difficulty,
-            text_level: this.text_level,
-            text_language: this.text_language,
-            text_close_button: this.text_close_button,
-            text_settings_title: this.text_settings_title,
-            text_help_title: this.text_help_title,
-            text_about_title: this.text_about_title,
-            text_canvas: this.text_canvas,
-            text_help_content: this.text_help_content,
-            text_about_content1: this.text_about_content1,
-            text_about_content2: this.text_about_content2,
-            text_about_content3: this.text_about_content3
-        });
+        this.saveState();
     }
 
     saveBoard () {
-        this.setState({
-            board: this.board,
-            level: this.level,
-            language: this.language,
-            snack_won: this.snack_won,
-            snack_lost: this.snack_lost,
-            snack_drawn: this.snack_drawn,
-            snack_notempty: this.snack_notempty,
-            dialog_info: this.dialog_info,
-            dialog_help: this.dialog_help,
-            dialog_settings: this.dialog_settings,
-            text_appname: this.text_appname,
-            text_restart_label: this.text_restart_label,
-            text_settings_label: this.text_settings_label,
-            text_help_label: this.text_help_label,
-            text_about_label: this.text_about_label,
-            text_close_label: this.text_close_label,
-            text_youwon: this.text_youwon,
-            text_youlost: this.text_youlost,
-            text_drawn: this.text_drawn,
-            text_notempty: this.text_notempty,
-            text_difficulty: this.text_difficulty,
-            text_level: this.text_level,
-            text_language: this.text_language,
-            text_close_button: this.text_close_button,
-            text_settings_title: this.text_settings_title,
-            text_help_title: this.text_help_title,
-            text_about_title: this.text_about_title,
-            text_canvas: this.text_canvas,
-            text_help_content: this.text_help_content,
-            text_about_content1: this.text_about_content1,
-            text_about_content2: this.text_about_content2,
-            text_about_content3: this.text_about_content3
-        });
+        this.saveState();
         localStorage.setItem('board', JSON.stringify(this.board));
         localStorage.setItem('level', this.level);
         localStorage.setItem('language', this.language);
@@ -967,17 +907,7 @@ class Board extends React.Component {
     }
 
     i18n_init () {
-        let banana = new Banana();
-
-        if (this.language === '' && navigator && navigator.languages) {
-            this.language = navigator.languages.find(lang => {return supported_languages.includes(lang)});
-            if (! this.language) {
-                this.language = 'en';
-            }
-        }
-
-        banana.setLocale(this.language);
-        fetch('i18n/' + banana.locale + '.json')
+        fetch('i18n/' + this.language + '.json')
           .then((response) => {
               if (!response.ok) {
                   throw new Error ('Network response was not ok');
@@ -986,66 +916,11 @@ class Board extends React.Component {
               }
           })
           .then((messages) => {
-            banana.load(messages, banana.locale);
-            this.text_appname = banana.i18n('text_appname');
-            this.text_restart_label = banana.i18n('text_restart_label');
-            this.text_settings_label = banana.i18n('text_settings_label');
-            this.text_help_label = banana.i18n('text_help_label');
-            this.text_about_label = banana.i18n('text_about_label');
-            this.text_close_label = banana.i18n('text_close_label');
-            this.text_youwon = banana.i18n('text_youwon');
-            this.text_youlost = banana.i18n('text_youlost');
-            this.text_drawn = banana.i18n('text_drawn');
-            this.text_notempty = banana.i18n('text_notempty');
-            this.text_difficulty = banana.i18n('text_difficulty');
-            this.text_level = banana.i18n('text_level');
-            this.text_language = banana.i18n('text_language');
-            this.text_close_button = banana.i18n('text_close_button');
-            this.text_settings_title = banana.i18n('text_settings_title');
-            this.text_help_title = banana.i18n('text_help_title');
-            this.text_about_title = banana.i18n('text_about_title');
-            this.text_canvas = banana.i18n('text_canvas');
-            this.text_help_content = banana.i18n('text_help_content');
-            this.text_about_content1 = banana.i18n('text_about_content1');
-            this.text_about_content2 = banana.i18n('text_about_content2');
-            this.text_about_content3 = banana.i18n('text_about_content3');
-            this.setState({
-                board: this.board,
-                level: this.level,
-                language: this.language,
-                snack_won: this.snack_won,
-                snack_lost: this.snack_lost,
-                snack_drawn: this.snack_drawn,
-                snack_notempty: this.snack_notempty,
-                dialog_info: this.dialog_info,
-                dialog_help: this.dialog_help,
-                dialog_settings: this.dialog_settings,
-                text_appname: this.text_appname,
-                text_restart_label: this.text_restart_label,
-                text_settings_label: this.text_settings_label,
-                text_help_label: this.text_help_label,
-                text_about_label: this.text_about_label,
-                text_close_label: this.text_close_label,
-                text_youwon: this.text_youwon,
-                text_youlost: this.text_youlost,
-                text_drawn: this.text_drawn,
-                text_notempty: this.text_notempty,
-                text_difficulty: this.text_difficulty,
-                text_level: this.text_level,
-                text_language: this.text_language,
-                text_close_button: this.text_close_button,
-                text_settings_title: this.text_settings_title,
-                text_help_title: this.text_help_title,
-                text_about_title: this.text_about_title,
-                text_canvas: this.text_canvas,
-                text_help_content: this.text_help_content,
-                text_about_content1: this.text_about_content1,
-                text_about_content2: this.text_about_content2,
-                text_about_content3: this.text_about_content3
-            });
+            this.text = messages;
+            this.saveState();
             })
           .catch(error => {
-            console.error('Cannot fetch i18n/' + banana.locale + '.json: ', error);
+            console.error('Cannot fetch i18n/' + this.language + '.json: ', error);
           });
     }
 
@@ -1063,7 +938,7 @@ class Board extends React.Component {
     render () {
 
         return (
-            <div ref={this.ticTacToeRef}>
+            <div ref={this.ticTacToeRef} lang={this.state.language}>
 
               <div className={classes.root} id="topBar">
                 <AppBar position="static" className={classes.root}>
@@ -1190,6 +1065,7 @@ class Board extends React.Component {
                   <p>{this.state.text_language}
                   <Select
                     native
+                    lang='en'
                     value={this.state.language}
                     onChange={this.updateLanguage}
                     inputProps={{
@@ -1366,7 +1242,3 @@ function App() {
 }
 
 export default App;
-
-// Local Variables:
-// mode: rjsx
-// End:
