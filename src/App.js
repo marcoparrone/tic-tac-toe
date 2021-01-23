@@ -1066,7 +1066,7 @@ class Board extends React.Component {
                   <p>{this.state.text_language}
                   <Select
                     native
-                    lang='en'
+                    lang="en"
                     value={this.state.language}
                     onChange={this.updateLanguage}
                     inputProps={{
