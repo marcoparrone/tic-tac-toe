@@ -33,7 +33,7 @@ import TicTacToe from './tic-tac-toe';
 
 import WebApp from './webapp';
 
-import I18n from './i18n';
+import I18n from '@marcoparrone/i18n';
 const defaultText = require ('./en.json');
 
 var classes;
