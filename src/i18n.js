@@ -3,10 +3,10 @@
 export default class I18n {
     constructor (callback_after_translation, language, messages_path, localstorage_prefix, supported_languages) {
         this.callback_after_translation = (callback_after_translation) ? callback_after_translation : () => {};
-        this.language = (language !== undefined) ? language : '';
-        this.messages_path = (messages_path !== undefined) ? messages_path : 'i18n/';
-        this.localstorage_prefix = (localstorage_prefix !== undefined) ? localstorage_prefix : '';
-        this.supported_languages = (supported_languages !== undefined) ? supported_languages : ['en', 'af', 'sq', 'am', 'ar', 'hy', 'az', 'eu', 'be', 'bn', 'bs', 'bg', 'ca', 'ceb', 'ny', 'zh-CN', 'zh-TW', 'co', 'hr', 'cs', 'da', 'nl', 'eo', 'et', 'tl', 'fi', 'fr', 'fy', 'gl', 'ka', 'de', 'el', 'gu', 'ht', 'ha', 'haw', 'iw', 'hi', 'hmn', 'hu', 'is', 'ig', 'id', 'ga', 'it', 'ja', 'jw', 'kn', 'kk', 'km', 'rw', 'ko', 'ku', 'ky', 'lo', 'la', 'lv', 'lt', 'lb', 'mk', 'mg', 'ms', 'ml', 'mt', 'mi', 'mr', 'mn', 'my', 'ne', 'no', 'or', 'ps', 'fa', 'pl', 'pt', 'pa', 'ro', 'ru', 'sm', 'gd', 'sr', 'st', 'sn', 'sd', 'si', 'sk', 'sl', 'so', 'es', 'su', 'sw', 'sv', 'tg', 'ta', 'tt', 'te', 'th', 'tr', 'tk', 'uk', 'ur', 'ug', 'uz', 'vi', 'cy', 'xh', 'yi', 'yo', 'zu', 'he', 'zh'];
+        this.language = (language) ? language : '';
+        this.messages_path = (messages_path) ? messages_path : 'i18n/';
+        this.localstorage_prefix = (localstorage_prefix) ? localstorage_prefix : '';
+        this.supported_languages = (supported_languages) ? supported_languages : ['test', 'en', 'af', 'sq', 'am', 'ar', 'hy', 'az', 'eu', 'be', 'bn', 'bs', 'bg', 'ca', 'ceb', 'ny', 'zh-CN', 'zh-TW', 'co', 'hr', 'cs', 'da', 'nl', 'eo', 'et', 'tl', 'fi', 'fr', 'fy', 'gl', 'ka', 'de', 'el', 'gu', 'ht', 'ha', 'haw', 'iw', 'hi', 'hmn', 'hu', 'is', 'ig', 'id', 'ga', 'it', 'ja', 'jw', 'kn', 'kk', 'km', 'rw', 'ko', 'ku', 'ky', 'lo', 'la', 'lv', 'lt', 'lb', 'mk', 'mg', 'ms', 'ml', 'mt', 'mi', 'mr', 'mn', 'my', 'ne', 'no', 'or', 'ps', 'fa', 'pl', 'pt', 'pa', 'ro', 'ru', 'sm', 'gd', 'sr', 'st', 'sn', 'sd', 'si', 'sk', 'sl', 'so', 'es', 'su', 'sw', 'sv', 'tg', 'ta', 'tt', 'te', 'th', 'tr', 'tk', 'uk', 'ur', 'ug', 'uz', 'vi', 'cy', 'xh', 'yi', 'yo', 'zu', 'he', 'zh'];
         this.text = '';
 
         this.change_language = this.change_language.bind(this);
@@ -18,14 +18,14 @@ export default class I18n {
         this.change_language_and_translate = this.change_language_and_translate.bind(this);
         this.change_language_translate_and_save_to_localStorage = this.change_language_translate_and_save_to_localStorage.bind(this);
 
-        if (this.language === '') {
+        if (!this.language || this.language === '') {
             this.load_language_from_localstorage();
-            if (this.language === '') {
-                this.load_language_from_navigator();
-                if (this.language === '') {
-                    this.change_language('en');
-                }
-            }
+        }
+        if (!this.language || this.language === '') {
+            this.load_language_from_navigator();
+        }
+        if (!this.language || this.language === '') {
+            this.change_language('en');
         }
         this.translate();
     }
@@ -49,7 +49,7 @@ export default class I18n {
     }
 
     save_language_to_localStorage () {
-        localStorage.setItem(this.localstorage_prefix + 'board', JSON.stringify(this.board));
+        localStorage.setItem(this.localstorage_prefix + 'language', JSON.stringify(this.language));
     }
 
     translate () {
