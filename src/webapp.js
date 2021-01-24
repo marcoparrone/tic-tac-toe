@@ -232,8 +232,6 @@ export default class WebApp {
         this.ctx.lineTo(x, y + s * 2 / 3);
 
         this.ctx.stroke();
-
-        console.log(this.cnv);
     }
 
     draw() {
