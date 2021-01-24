@@ -203,42 +203,62 @@ function board_p(board) {
 }
 
 export default class TicTacToe {
-    constructor() {
-        this.board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-        this.level = 9;
+    constructor(board, level, localstorage_prefix) {
+        this.board = [];
+        this.level = -1;
+        this.localstorage_prefix = (localstorage_prefix !== undefined) ? localstorage_prefix : '';
 
+        this.load_board_from_localStorage = this.load_board_from_localStorage.bind(this);
+        this.load_level_from_localStorage = this.load_level_from_localStorage.bind(this);
         this.load_from_localStorage = this.load_from_localStorage.bind(this);
-        this.board_to_localStorage = this.save_to_localStorage.bind(this);
-        this.level_to_localStorage = this.save_to_localStorage.bind(this);
+        this.save_board_to_localStorage = this.save_board_to_localStorage.bind(this);
+        this.save_level_to_localStorage = this.save_level_to_localStorage.bind(this);
         this.save_to_localStorage = this.save_to_localStorage.bind(this);
         this.reset = this.reset.bind(this);
         this.insert_in_board = this.insert_in_board.bind(this);
+
+        if (this.board.length === 0) {
+            this.load_board_from_localStorage();
+            if (this.board.length === 0) {
+                this.board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+            }
+        }
+        if (this.level === -1) {
+            this.load_level_from_localStorage();
+            if (this.level === -1) {
+                this.level = 9;
+            }
+        }
     }
 
-    load_from_localStorage(prefix) {
-        let defined_prefix = (prefix !== undefined) ? prefix : "";
-        let board = localStorage.getItem(defined_prefix + 'board');
-        let level = localStorage.getItem(defined_prefix + 'level');
-
+    load_board_from_localStorage() {
+        let board = localStorage.getItem(this.localstorage_prefix + 'board');
         if (board) {
             board = JSON.parse(board);
             if (board_p(board)) {
                 this.board = board;
             }
         }
+    }
+
+    load_level_from_localStorage() {
+        let level = localStorage.getItem(this.localstorage_prefix + 'level');
         if (!isNaN(level) && level !== '' && parseInt(level) <= 9 && parseInt(level) >= 1) {
             this.level = level;
         }
     }
 
+    load_from_localStorage() {
+        this.load_board_from_localStorage();
+        this.load_level_from_localStorage();
+    }
+
     save_board_to_localStorage(prefix) {
-        let defined_prefix = (prefix !== undefined) ? prefix : "";
-        localStorage.setItem(defined_prefix + 'board', JSON.stringify(this.board));
+        localStorage.setItem(this.localstorage_prefix + 'board', JSON.stringify(this.board));
     }
 
     save_level_to_localStorage(prefix) {
-        let defined_prefix = (prefix !== undefined) ? prefix : "";
-        localStorage.setItem(defined_prefix + 'level', this.level);
+        localStorage.setItem(this.localstorage_prefix + 'level', this.level);
     }
 
     save_to_localStorage(prefix) {
