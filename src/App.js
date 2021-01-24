@@ -27,8 +27,6 @@ import AutorenewIcon from '@material-ui/icons/Autorenew';
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-import HtmlParse from 'html-react-parser';
-
 import TicTacToe from './tic-tac-toe';
 
 import WebApp from './webapp';
@@ -117,9 +115,16 @@ class Board extends React.Component {
             text_help_title: defaultText['text_help_title'],
             text_about_title: defaultText['text_about_title'],
             text_canvas: defaultText['text_canvas'],
-            text_help_content: HtmlParse(defaultText['text_help_content']),
-            text_about_content1: HtmlParse(defaultText['text_about_content1']),
-            text_about_content2: HtmlParse(defaultText['text_about_content2']),
+            text_help_content1: defaultText['text_help_content1'],
+            text_help_content2: defaultText['text_help_content2'],
+            text_help_content3: defaultText['text_help_content3'],
+            text_help_content4: defaultText['text_help_content4'],
+            text_about_content1: defaultText['text_about_content1'],
+            text_about_content2: defaultText['text_about_content2'],
+            text_about_content3: defaultText['text_about_content3'],
+            text_about_content4: defaultText['text_about_content4'],
+            text_about_content5: defaultText['text_about_content5'],
+            text_about_content6: defaultText['text_about_content6']
         };
         this.ticTacToeRef = React.createRef();
 
@@ -174,10 +179,16 @@ class Board extends React.Component {
             text_help_title: this.i18n.text['text_help_title'],
             text_about_title: this.i18n.text['text_about_title'],
             text_canvas: this.i18n.text['text_canvas'],
-            text_help_content: HtmlParse(this.i18n.text['text_help_content']),
-            text_about_content1: HtmlParse(this.i18n.text['text_about_content1']),
+            text_help_content1: this.i18n.text['text_help_content1'],
+            text_help_content2: this.i18n.text['text_help_content2'],
+            text_help_content3: this.i18n.text['text_help_content3'],
+            text_help_content4: this.i18n.text['text_help_content4'],
+            text_about_content1: this.i18n.text['text_about_content1'],
             text_about_content2: this.i18n.text['text_about_content2'],
-            text_about_content3: this.i18n.text['text_about_content3']
+            text_about_content3: this.i18n.text['text_about_content3'],
+            text_about_content4: this.i18n.text['text_about_content4'],
+            text_about_content5: this.i18n.text['text_about_content5'],
+            text_about_content6: this.i18n.text['text_about_content6']
         });
       } else {
         this.setState({
@@ -208,10 +219,16 @@ class Board extends React.Component {
           text_help_title: defaultText['text_help_title'],
           text_about_title: defaultText['text_about_title'],
           text_canvas: defaultText['text_canvas'],
-          text_help_content: HtmlParse(defaultText['text_help_content']),
-          text_about_content1: HtmlParse(defaultText['text_about_content1']),
+          text_help_content1: defaultText['text_help_content1'],
+          text_help_content2: defaultText['text_help_content2'],
+          text_help_content3: defaultText['text_help_content3'],
+          text_help_content4: defaultText['text_help_content4'],
+          text_about_content1: defaultText['text_about_content1'],
           text_about_content2: defaultText['text_about_content2'],
           text_about_content3: defaultText['text_about_content3'],
+          text_about_content4: defaultText['text_about_content4'],
+          text_about_content5: defaultText['text_about_content5'],
+          text_about_content6: defaultText['text_about_content6']
         });
       }
     }
@@ -473,8 +490,6 @@ class Board extends React.Component {
                         id: 'language-select',
                     }}
                     >
-                    <option value="test">test</option>
-                    <option value="test2">test</option>
                     <option value="af">Afrikaans</option>
                     <option value="sq">Albanian</option>
                     <option value="am">Amharic</option>
@@ -603,7 +618,10 @@ class Board extends React.Component {
                 <DialogTitle id="form-dialog-title">{this.state.text_help_title}</DialogTitle>
                 <DialogContent>
                   <DialogContentText>
-                      {this.state.text_help_content}
+                      <p>{this.state.text_help_content1}</p>
+                      <p>{this.state.text_help_content2}</p>
+                      <p>{this.state.text_help_content3}</p>
+                      <p>{this.state.text_help_content4}</p>
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -617,9 +635,12 @@ class Board extends React.Component {
                 <DialogTitle id="form-dialog-title">{this.state.text_about_title}</DialogTitle>
                 <DialogContent>
                   <DialogContentText>
-                    {this.state.text_about_content1}
-                    <p>{this.state.text_about_content2}</p>
+                    <p>{this.state.text_about_content1}
+                    <br />{this.state.text_about_content2}</p>
                     <p>{this.state.text_about_content3}</p>
+                    <p>{this.state.text_about_content4}</p>
+                    <p>{this.state.text_about_content5}</p>
+                    <p>{this.state.text_about_content6}</p>
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
