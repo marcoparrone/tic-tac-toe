@@ -29,7 +29,7 @@ import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import HtmlParse from 'html-react-parser';
 
-import {empty, ai, human, playing, endwin, endlose, enddraw, board_p, check_end, get_at_level} from './tic-tac-toe';
+import TicTacToe from './tic-tac-toe';
 
 import WebApp from './webapp';
 
@@ -78,8 +78,7 @@ class Board extends React.Component {
     constructor (props) {
         super(props);
         this.webapp = {};
-        this.board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-        this.level = 9;
+        this.tictactoe = {};
         this.language = 'en';
         this.snack_won = false;
         this.snack_lost = false;
@@ -115,8 +114,7 @@ class Board extends React.Component {
         };
 
         this.state = {
-            board: this.board,
-            level: this.level,
+            level: this.tictactoe.level,
             language: this.language,
             snack_won: this.snack_won,
             snack_lost: this.snack_lost,
@@ -159,8 +157,6 @@ class Board extends React.Component {
         this.close_dialog_settings = this.close_dialog_settings.bind(this);
 
         this.saveState = this.saveState.bind(this);
-        this.loadBoard = this.loadBoard.bind(this);
-        this.saveBoard = this.saveBoard.bind(this);
 
         this.insert_in_board = this.insert_in_board.bind(this);
         this.draw_cell_content = this.draw_cell_content.bind(this);
@@ -176,8 +172,7 @@ class Board extends React.Component {
 
     saveState () {
         this.setState({
-            board: this.board,
-            level: this.level,
+            level: this.tictactoe.level,
             language: this.language,
             snack_won: this.snack_won,
             snack_lost: this.snack_lost,
@@ -211,63 +206,28 @@ class Board extends React.Component {
         });
     }
 
-    loadBoard () {
-        let board = localStorage.getItem('board');
-        let level = localStorage.getItem('level');
-        let language = localStorage.getItem('language');
-
-        if (board) {
-            board = JSON.parse(board);
-            if (board_p(board)) {
-                this.board = board;
-            }
-        }
-        if (! isNaN(level) && level !== '' && parseInt(level) <= 9 && parseInt(level) >=1) {
-            this.level = level;
-        }
-        if (supported_languages.includes(language)) {
-            this.language = language;
-        } else {
-            if (navigator && navigator.languages) {
-                this.language = navigator.languages.find(lang => {return supported_languages.includes(lang)});
-                if (! this.language) {
-                    this.language = 'en';
-                }
-            }
-        }
-        this.saveState();
-    }
-
-    saveBoard () {
-        this.saveState();
-        localStorage.setItem('board', JSON.stringify(this.board));
-        localStorage.setItem('level', this.level);
-        localStorage.setItem('language', this.language);
-    }
-
     resetgame() {
-        for (let i = 0; i < 9; i++) {
-            this.board[i] = 0;
-        }
-        this.saveBoard();
+        this.tictactoe.reset();
+        this.tictactoe.save_board_to_localStorage();
         this.webapp.draw();
     }
 
     help() {
         this.dialog_help = true;
-        this.saveBoard();
+        this.saveState();
     }
     
     about() {
         this.dialog_info = true;
-        this.saveBoard();
+        this.saveState();
     }
 
     updateLevel (sliderobj,sliderval) {
         if (sliderval) {
-            this.level = sliderval;
+            this.tictactoe.level = sliderval;
         }
-        this.saveBoard();
+        this.tictactoe.save_level_to_localStorage();
+        this.saveState();
     }
 
     updateLanguage (event) {
@@ -279,47 +239,18 @@ class Board extends React.Component {
 
     settings() {
         this.dialog_settings = true;
-        this.saveBoard();
+        this.saveState();
     }
 
     insert_in_board(position) {
-        let cell;
-        
-        if (this.board[position] !== empty) {
-	    if (check_end(this.board) === playing) {
-                this.snack_notempty = true;
-                this.saveBoard();
-	    }
-        } else {
-	    if (check_end(this.board) === playing) {
-	        this.board[position] = human;
-	        this.webapp.surf[position].draw();
-	        if (check_end(this.board) === playing) {
-		    cell = get_at_level(this.board, this.level);
-		    if (this.board[cell] === empty) {
-		        this.board[cell] = ai;
-		        this.webapp.surf[cell].draw();
-		    }
-	        }
-	    }
-        }
-	switch (check_end(this.board)) {
-	case endwin:
-            this.snack_won = true;
-            this.saveBoard();
-	    break;
-	case endlose:
-            this.snack_lost = true;
-            this.saveBoard();
-	    break;
-	case enddraw:
-            this.snack_drawn = true;
-            this.saveBoard();
-	    break;
-	default:
-            this.saveBoard();
-	    break;
-        }
+      const callback_notempty = () => { this.snack_notempty = true}
+      const callback_drawcell = (position) => { this.webapp.surf[position].draw()};
+      const callback_won = () => { this.snack_won = true};
+      const callback_lost = () => { this.snack_lost = true};
+      const callback_drawn = () =>  { this.snack_drawn = true};
+      this.tictactoe.insert_in_board(position, callback_notempty, callback_drawcell, callback_won, callback_lost, callback_drawn);
+      this.tictactoe.save_board_to_localStorage();
+      this.saveState();
     }
 
     close_snack_won(myevent, myreason){
@@ -327,7 +258,7 @@ class Board extends React.Component {
             return;
         }
         this.snack_won = false;
-        this.saveBoard();
+        this.saveState();
     }
     
     close_snack_lost(myevent, myreason){
@@ -335,7 +266,7 @@ class Board extends React.Component {
             return;
         }
         this.snack_lost = false;
-        this.saveBoard();
+        this.saveState();
     }
     
     close_snack_drawn(myevent, myreason){
@@ -343,7 +274,7 @@ class Board extends React.Component {
             return;
         }
         this.snack_drawn = false;
-        this.saveBoard();
+        this.saveState();
     }
 
     close_snack_notempty(myevent, myreason){
@@ -351,7 +282,7 @@ class Board extends React.Component {
             return;
         }
         this.snack_notempty = false;
-        this.saveBoard();
+        this.saveState();
     }
 
     close_dialog_info(myevent, myreason){
@@ -359,7 +290,7 @@ class Board extends React.Component {
             return;
         }
         this.dialog_info = false;
-        this.saveBoard();
+        this.saveState();
     }
 
     close_dialog_help(myevent, myreason){
@@ -367,7 +298,7 @@ class Board extends React.Component {
             return;
         }
         this.dialog_help = false;
-        this.saveBoard();
+        this.saveState();
     }
 
     close_dialog_settings(myevent, myreason){
@@ -375,7 +306,7 @@ class Board extends React.Component {
             return;
         }
         this.dialog_settings = false;
-        this.saveBoard();
+        this.saveState();
     }
 
     i18n_init () {
@@ -398,19 +329,34 @@ class Board extends React.Component {
     }
 
     draw_cell_content(i) {
-        this.webapp.draw_cell_content_helper(this.board, i);
+        this.webapp.draw_cell_content_helper(this.tictactoe.board, i);
     }
 
     componentDidMount() {
-        // Load the localStorage data.
-        this.loadBoard();
+
+        // Init the game logic.
+        this.tictactoe = new TicTacToe();
+        this.tictactoe.load_from_localStorage();
 
         // Localize the User Interface.
         this.i18n_init();
+        let language = localStorage.getItem('language');
+        if (supported_languages.includes(language)) {
+            this.language = language;
+        } else {
+            if (navigator && navigator.languages) {
+                this.language = navigator.languages.find(lang => {return supported_languages.includes(lang)});
+                if (! this.language) {
+                    this.language = 'en';
+                }
+            }
+        }
 
         // Init canvas and input handler code.
         this.webapp = new WebApp(this);
         this.webapp.init();
+
+        this.saveState();
     }
 
     render () {
