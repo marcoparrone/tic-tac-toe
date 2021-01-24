@@ -71,60 +71,61 @@ function draw_x(context, x, y, w, h) {
 }
 
 export default class WebApp {
-    constructor(callerObject) {
+    constructor(draw_cell_content, insert_in_board) {
+        this.draw_cell_content = draw_cell_content;
+        this.insert_in_board = insert_in_board;
         this.cnv = get_canvas();
         this.ctx = get_context();
         this.cnv_top = null; // canvas y position
         this.selected = -1; // selected surface id
-        this.parent = callerObject;
         // surfaces inside the canvas
         this.surf = [
             {
                 xa: 0, ya: 0, xb: 0, yb: 0, left: 0, right: 1, up: 0, down: 3, clickable: true,
-                draw: () => { this.parent.draw_cell_content(0); },
-                action: () => { this.parent.insert_in_board(0); }
+                draw: () => { this.draw_cell_content(0); },
+                action: () => { this.insert_in_board(0); }
             },
             {
                 xa: 0, ya: 0, xb: 0, yb: 0, left: 0, right: 2, up: 1, down: 4, clickable: true,
-                draw: () => { this.parent.draw_cell_content(1); },
-                action: () => { this.parent.insert_in_board(1); }
+                draw: () => { this.draw_cell_content(1); },
+                action: () => { this.insert_in_board(1); }
             },
             {
                 xa: 0, ya: 0, xb: 0, yb: 0, left: 1, right: 2, up: 2, down: 5, clickable: true,
-                draw: () => { this.parent.draw_cell_content(2); },
-                action: () => { this.parent.insert_in_board(2); }
+                draw: () => { this.draw_cell_content(2); },
+                action: () => { this.insert_in_board(2); }
             },
 
             {
                 xa: 0, ya: 0, xb: 0, yb: 0, left: 3, right: 4, up: 0, down: 6, clickable: true,
-                draw: () => { this.parent.draw_cell_content(3); },
-                action: () => { this.parent.insert_in_board(3); }
+                draw: () => { this.draw_cell_content(3); },
+                action: () => { this.insert_in_board(3); }
             },
             {
                 xa: 0, ya: 0, xb: 0, yb: 0, left: 3, right: 5, up: 1, down: 7, clickable: true,
-                draw: () => { this.parent.draw_cell_content(4); },
-                action: () => { this.parent.insert_in_board(4); }
+                draw: () => { this.draw_cell_content(4); },
+                action: () => { this.insert_in_board(4); }
             },
             {
                 xa: 0, ya: 0, xb: 0, yb: 0, left: 4, right: 5, up: 2, down: 8, clickable: true,
-                draw: () => { this.parent.draw_cell_content(5); },
-                action: () => { this.parent.insert_in_board(5); }
+                draw: () => { this.draw_cell_content(5); },
+                action: () => { this.insert_in_board(5); }
             },
 
             {
                 xa: 0, ya: 0, xb: 0, yb: 0, left: 6, right: 7, up: 3, down: 6, clickable: true,
-                draw: () => { this.parent.draw_cell_content(6); },
-                action: () => { this.parent.insert_in_board(6); }
+                draw: () => { this.draw_cell_content(6); },
+                action: () => { this.insert_in_board(6); }
             },
             {
                 xa: 0, ya: 0, xb: 0, yb: 0, left: 6, right: 8, up: 4, down: 7, clickable: true,
-                draw: () => { this.parent.draw_cell_content(7); },
-                action: () => { this.parent.insert_in_board(7); }
+                draw: () => { this.draw_cell_content(7); },
+                action: () => { this.insert_in_board(7); }
             },
             {
                 xa: 0, ya: 0, xb: 0, yb: 0, left: 7, right: 8, up: 5, down: 8, clickable: true,
-                draw: () => { this.parent.draw_cell_content(8); },
-                action: () => { this.parent.insert_in_board(8); }
+                draw: () => { this.draw_cell_content(8); },
+                action: () => { this.insert_in_board(8); }
             }
         ];
         this.resize_canvas = this.resize_canvas.bind(this);
@@ -171,7 +172,7 @@ export default class WebApp {
     draw_cells_content() {
         let i = 0;
         for (i = 0; i < 9; i++) {
-            this.parent.draw_cell_content(i);
+            this.draw_cell_content(i);
         }
     }
 

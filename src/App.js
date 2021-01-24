@@ -328,7 +328,7 @@ class Board extends React.Component {
         this.tictactoe = new TicTacToe();
 
         // Init canvas and input handler code.
-        this.webapp = new WebApp(this);
+        this.webapp = new WebApp(this.draw_cell_content, this.insert_in_board);
         this.webapp.init();
 
         this.saveState();
