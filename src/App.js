@@ -176,8 +176,8 @@ class Board extends React.Component {
             text_canvas: this.i18n.text['text_canvas'],
             text_help_content: HtmlParse(this.i18n.text['text_help_content']),
             text_about_content1: HtmlParse(this.i18n.text['text_about_content1']),
-            text_about_content2: HtmlParse(this.i18n.text['text_about_content2']),
-            text_about_content3: HtmlParse(this.i18n.text['text_about_content3'])
+            text_about_content2: this.i18n.text['text_about_content2'],
+            text_about_content3: this.i18n.text['text_about_content3']
         });
       } else {
         this.setState({
@@ -210,7 +210,8 @@ class Board extends React.Component {
           text_canvas: defaultText['text_canvas'],
           text_help_content: HtmlParse(defaultText['text_help_content']),
           text_about_content1: HtmlParse(defaultText['text_about_content1']),
-          text_about_content2: HtmlParse(defaultText['text_about_content2']),
+          text_about_content2: defaultText['text_about_content2'],
+          text_about_content3: defaultText['text_about_content3'],
         });
       }
     }
@@ -472,6 +473,8 @@ class Board extends React.Component {
                         id: 'language-select',
                     }}
                     >
+                    <option value="test">test</option>
+                    <option value="test2">test</option>
                     <option value="af">Afrikaans</option>
                     <option value="sq">Albanian</option>
                     <option value="am">Amharic</option>
@@ -615,8 +618,8 @@ class Board extends React.Component {
                 <DialogContent>
                   <DialogContentText>
                     {this.state.text_about_content1}
-                    {this.state.text_about_content2}
-                    {this.state.text_about_content3}
+                    <p>{this.state.text_about_content2}</p>
+                    <p>{this.state.text_about_content3}</p>
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
