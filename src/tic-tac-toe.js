@@ -234,12 +234,10 @@ export default class TicTacToe {
     save_board_to_localStorage(prefix) {
         let defined_prefix = (prefix !== undefined) ? prefix : "";
         localStorage.setItem(defined_prefix + 'board', JSON.stringify(this.board));
-        localStorage.setItem(defined_prefix + 'level', this.level);
     }
 
     save_level_to_localStorage(prefix) {
         let defined_prefix = (prefix !== undefined) ? prefix : "";
-        localStorage.setItem(defined_prefix + 'board', JSON.stringify(this.board));
         localStorage.setItem(defined_prefix + 'level', this.level);
     }
 
