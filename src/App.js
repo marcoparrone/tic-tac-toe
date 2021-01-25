@@ -195,7 +195,7 @@ class Board extends React.Component {
       } else {
         this.setState({
           level: this.tictactoe.level,
-          language: this.i18n.language,
+          language: 'en',
           snack_won: this.snack_won,
           snack_lost: this.snack_lost,
           snack_drawn: this.snack_drawn,
