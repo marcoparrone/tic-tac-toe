@@ -43,6 +43,6 @@
 						]
 			},
 			"devDependencies": {
-						"@marcoparrone/translate-json": "^1.0.4"
+						"@marcoparrone/translate-json": "^1.0.6"
 			}
 }
