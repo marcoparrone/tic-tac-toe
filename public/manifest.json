@@ -12,12 +12,12 @@
 	{ "src": "favicon.ico", "sizes": "64x64", "type": "image/x-icon" }
     ],
     "lang": "en-US",
-    "start_url": "https://tic-tac-toe.marcoparrone.com",
+    "start_url": "https://marcoparrone.github.io/tic-tac-toe",
     "display": "standalone",
     "orientation": "any",
     "theme_color": "#000000",
     "background_color": "#ffffff",
-    "scope": "https://tic-tac-toe.marcoparrone.com",
+    "scope": "https://marcoparrone.github.io/tic-tac-toe",
     "categories":  ["board", "games", "board games"],
     "screenshots" : [
         {
